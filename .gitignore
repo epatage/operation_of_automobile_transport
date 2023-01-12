@@ -111,7 +111,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-oat/django_key.env
+oat/.env
 
 # Spyder project settings
 .spyderproject

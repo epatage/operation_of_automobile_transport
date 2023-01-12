@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  {{ column.title }}
+{% endblock %}
+
+{% block content %}
+  <h3> Список транспорта: {{ cars_count }} ед.</h3>
+  <hr>
+  <div class="container">
+    {% for car in cars %}
+      <p>{{ car.type }} {{ car.brand }} {{ car.reg_mark }}</p>
+
+    {% if not forloop.last %}<hr>{% endif %}
+
+    {% endfor %}
+  </div>
+{% endblock %}
