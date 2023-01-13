@@ -2,20 +2,22 @@
 
 <nav class="navbar navbar-light" style="background-color: lightskyblue">
   <div class="container">
-   {#  <a class="navbar-brand" href="{% url 'posts:index' %}">  #}
+   {# <a class="navbar-brand" href="{% url 'posts:index' %}"> --- Это ссылка через картинку на главную страницу #}
       <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
       <span style="color:red">Ya</span>tube
-    </a>
-    {# Добавлено в спринте #}
+    {#  </a>   - --- закрытие ссылки через картинку выше #}
+
 
     {% comment %}
     Меню - список пунктов со стандартными классами Bootsrap.
     Класс nav-pills нужен для выделения активных пунктов
     {% endcomment %}
 
-  {% comment %}
+
     <ul class="nav nav-pills">
       {% with request.resolver_match.view_name as view_name %}
+
+        {% comment %}
       <li class="nav-item">
         <a class="nav-link
           {% if view_name  == 'about:author' %}active{% endif %}"
@@ -28,13 +30,19 @@
             href="{% url 'about:tech' %}">Технологии
         </a>
       </li>
+      {% endcomment %}
+
       {% if user.is_authenticated %}
+
+        {% comment %}
       <li class="nav-item">
         <a class="nav-link
           {% if view_name  == 'posts:create_post' %}active{% endif %}"
            href="{% url 'posts:post_create' %}">Новая запись
         </a>
       </li>
+      {% endcomment %}
+
       <li class="nav-item">
         <a class="nav-link link-light
           {% if view_name  == 'users:password_change_form' %}active{% endif %}"
@@ -66,6 +74,6 @@
       {% endif %}
       {% endwith %}
     </ul>
-    {% endcomment %}
+
   </div>
 </nav>
