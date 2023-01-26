@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Car, Column
+from .models import Car, Column, TypeCar
 
 
 class CarAdmin(admin.ModelAdmin):
@@ -8,9 +8,11 @@ class CarAdmin(admin.ModelAdmin):
     search_fields = ('brand', 'type', 'reg_mark')
     list_filter = ('type',)
     empty_value_display = '-пусто-'
-    list_editable = ('column',)
+    list_editable = ('column', 'type')
 
 
 admin.site.register(Car, CarAdmin)
 
 admin.site.register(Column)
+
+admin.site.register(TypeCar)

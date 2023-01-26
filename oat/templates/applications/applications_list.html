@@ -2,15 +2,14 @@
 {% load static %}
 
 {% block title %}
-  Список транспорта
+  Список заявок
 {% endblock %}
 
 {% block content %}
-  <h3> Список транспорта: {{ cars_count }} ед. </h3>
-  <a href="{% url "cars:car_add" %}">Добавить ТС</a>
+  {# <h3> Список Заявок: {{ cars_count }} ед. </h3> #}
   <hr>
   <div class="container">
-    {% for car in cars %}
+    {% for car in cars %}  {# нужно все переделывать под заявки #}
       <p>
         {{ car.type }}
         {{ car.brand }}
@@ -26,4 +25,5 @@
 
     {% endfor %}
   </div>
+   {% include 'applications/includes/paginator.html' %}
 {% endblock %}
