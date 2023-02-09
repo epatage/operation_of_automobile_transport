@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Пост {{ post|truncatechars:30 }}
+    ТС {{ car|truncatechars:30 }}
 {% endblock %}
 
 {% block content %}
@@ -10,17 +10,23 @@
         <aside class="col-12 col-md-3">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              Дата публикации: {{ post.pub_date|date:"d E Y" }}
+              Тип ТС: {{ car.type }}
+            </li>
+            <li class="list-group-item">
+              Марка ТС: {{ car.brand }}
+            </li>
+            <li class="list-group-item">
+              ГРЗ ТС: {{ car.reg_mark }}
             </li>
             <!-- если у поста есть группа -->
-            {% if post.group %}
+
             <li class="list-group-item">
-              Группа: {{ post.group }}
-              <a href="{% url 'posts:group_list' post.group.slug %}">
-                все записи группы
+              Автоколонна: {{ car.column }}
+              <a href="{% url 'cars:column' car.column.slug %}">
+                все ТС подразделения
               </a>
             </li>
-            {% endif %}
+         {% comment %}
             <li class="list-group-item">
               Автор: <a href="{% url 'posts:profile' post.author.username  %}">
               {{ post.author.get_full_name }}
@@ -34,20 +40,20 @@
                 все посты пользователя
               </a>
             </li>
+          {% endcomment %}
 
-            {% if user == post.author %}
             <li class="list-group-item">
-              <a href="{% url 'posts:post_edit' post.id %}">
+              <a href="{% url 'cars:car_edit' car.id %}">
                 Редактировать
               </a>
             </li>
-            {% endif %}
+
 
           </ul>
         </aside>
         <article class="col-12 col-md-9">
           <p>
-            {{ post }}
+            {{ car }}  + Какая-то дополнительная информация.
           </p>
         </article>
       </div>

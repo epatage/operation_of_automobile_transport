@@ -9,7 +9,7 @@ class Car(models.Model):
         blank=True,
         null=True,
         on_delete=models.CASCADE,
-        related_name='type',
+        related_name='cars',
         verbose_name='Тип',
         help_text='Тип транспортного средства',
     )

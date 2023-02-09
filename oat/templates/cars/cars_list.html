@@ -14,7 +14,7 @@
       <p>
         {{ car.type }}
         {{ car.brand }}
-        {{ car.reg_mark }}
+        <a href="{% url "cars:car_detail" car.id %}">{{ car.reg_mark }}</a>
         {% if car.column %}
           <a href="{% url 'cars:column' car.column.slug %}">{{ car.column }}</a>
         {% else %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Car, Column
-from .forms import CarAddForm
+from .forms import CarAddForm, CarEditForm
 
 
 # Общий список транспорта
@@ -18,16 +18,12 @@ def cars_list(request):
     return render(request, 'cars/cars_list.html', context)
 
 
-# Просмотр информации об отдельной машине (возможно, редактирование??)
+# Просмотр информации об отдельной машине (отправка на редактирование)
 @login_required
 def car_detail(request, car_id):
     car = get_object_or_404(Car, pk=car_id)
 
-    context = {
-        'car': car,
-    }
-
-    return render(request, 'cars/car_detail.html', context)  # Шаблон надо править !!
+    return render(request, 'cars/car_detail.html', {'car': car})
 
 
 # Добавление машины в список
@@ -45,19 +41,21 @@ def car_add(request):
 
 # Изменение описания машины
 @login_required
-def car_edit(request):
+def car_edit(request, car_id):
+    car = get_object_or_404(Car, pk=car_id)
+    form = CarEditForm(request.POST or None, instance=car)
+    context = {'form': form, 'is_edit': True}
+    if form.is_valid():
+        form.save()
 
-    context = {
-
-    }
-
-    return render(request, '', context)
+        return redirect('cars:car_detail', car_id=car.id)
+    return render(request, 'cars/car_add.html', context)
 
 
 # Удаление машины (из общего списка, индивидуальный просмотр или перенести в редактирование)
 @login_required
 def car_delete(request, car_id):
-
+    #  сделать перенаправление со страницы редактирования машины
     context = {
 
     }
@@ -69,7 +67,7 @@ def car_delete(request, car_id):
 @login_required
 def column_cars_list(request, slug):
     column = get_object_or_404(Column, slug=slug)
-    cars = Car.objects.filter(column=column)
+    cars = column.cars.all()  # Car.objects.filter(column=column)
     cars_count = cars.count()
 
     context = {
