@@ -15,25 +15,29 @@
     <meta name="theme-color" content="#ffffff">
     <!-- Подключен файл со стандартными стилями бустрап -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>
       {% block title %}
         Здесь должна быть надпись на закладке
       {% endblock %}
     </title>
 </head>
-<body>
-  <header>
+<body style="background-color: #79aec8">
+  <header class="sticky-top">
       {% include 'includes/header.html' %}
   </header>
-  <main>
-    <div class="container">
+  <main >
+    <div class="container" style="background-color: #87b8d2">
       {% block content %}
         Что-то не так...... контента нет
       {% endblock %}
     </div>
   </main>
   <footer>
+    {% comment %}
+    пока уберем ...........
     {% include 'includes/footer.html' %}
+    {% endcomment %}
   </footer>
 </body>
 </html>

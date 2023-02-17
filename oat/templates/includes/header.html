@@ -1,12 +1,14 @@
 {% load static %}
 
-<nav class="navbar navbar-light" style="background-color: lightskyblue">
+<nav class="navbar" style="background-color: #6193ab  "> {# #79aec8 lightskyblue  #417690 #}
   <div class="container">
    {# <a class="navbar-brand" href="{% url 'posts:index' %}"> --- Это ссылка через картинку на главную страницу #}
     {# Переделал временно ссылку на общий список транспорта #}
-    <a class="navbar-brand" href="{% url 'cars:cars_list' %}">
+    <a class="navbar-brand" href="{% url 'applications:applications_list' %}">
       <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-      <span style="color:red">Ya</span>tube
+      <span style='font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif '>
+        <span style="color:#044a65"><b>ЭАТ</b></span>
+      </span>
     </a>
     {#  </a>   - --- закрытие ссылки через картинку выше #}
 
@@ -17,12 +19,32 @@
     {% endcomment %}
 
 
-    <ul class="nav nav-pills">
+    <ul class="nav nav-pills" style="font-size: 18px">
       {% with request.resolver_match.view_name as view_name %}
 
+      <li class="nav-item">
+        <a class="nav-link link-dark
+          {% if view_name  == 'applications:application_add' %}active{% endif %}"
+           href="{% url 'applications:application_add' %}">Заявка
+        </a>
+      </li>
 
       <li class="nav-item">
-        <a class="nav-link
+        <a class="nav-link link-dark
+          {% if view_name  == 'applications:applications_list' %}active{% endif %}"
+           href="{% url 'applications:applications_list' %}">Список заявок
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link link-dark
+          {% if view_name  == 'cars:cars_list' %}active{% endif %}"
+           href="{% url 'cars:cars_list' %}">Список транспорта
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link link-dark
           {% if view_name  == 'about:info' %}active{% endif %}"
            href="{% url 'about:info' %}">Информация
         </a>

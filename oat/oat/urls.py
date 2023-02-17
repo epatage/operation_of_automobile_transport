@@ -10,7 +10,7 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('about/', include('about.urls', namespace='about')),
     path('cars/', include('cars.urls', namespace='cars')),
-    # path('', include('applications.urls', namespace='applications')),  # будет выводить главную страницу заявок
+    path('', include('applications.urls', namespace='applications')),  # будет выводить главную страницу заявок
 ]
 
 

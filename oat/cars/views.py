@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Car, Column
 from .forms import CarAddForm, CarEditForm
+import pandas as pd
 
 
 # Общий список транспорта
@@ -9,10 +10,12 @@ from .forms import CarAddForm, CarEditForm
 def cars_list(request):
     cars = Car.objects.all()
     cars_count = cars.count()
+    df = pd.DataFrame(cars)
 
     context = {
         'cars': cars,
         'cars_count': cars_count,
+        'df': df.to_html(),
     }
 
     return render(request, 'cars/cars_list.html', context)
@@ -44,7 +47,7 @@ def car_add(request):
 def car_edit(request, car_id):
     car = get_object_or_404(Car, pk=car_id)
     form = CarEditForm(request.POST or None, instance=car)
-    context = {'form': form, 'is_edit': True}
+    context = {'form': form, 'is_edit': True, 'car': car}
     if form.is_valid():
         form.save()
 
@@ -52,15 +55,14 @@ def car_edit(request, car_id):
     return render(request, 'cars/car_add.html', context)
 
 
-# Удаление машины (из общего списка, индивидуальный просмотр или перенести в редактирование)
+# Удаление машины
 @login_required
 def car_delete(request, car_id):
     #  сделать перенаправление со страницы редактирования машины
-    context = {
+    car = get_object_or_404(Car, pk=car_id)
+    car.delete()
 
-    }
-
-    return render(request, '', context)
+    return redirect('cars:cars_list')
 
 
 # Автоколонна и закрепленный в ней список транспорта

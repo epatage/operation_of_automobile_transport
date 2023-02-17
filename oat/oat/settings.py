@@ -109,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Saratov'
 
 USE_I18N = True
 
@@ -131,7 +131,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'cars:cars_list'
+LOGIN_REDIRECT_URL = 'applications:applications_list'
 # LOGOUT_REDIRECT_URL = 'posts:index'  # нужно править !!!
 
 

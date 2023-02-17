@@ -1,0 +1,24 @@
+{% if user.is_authenticated %}
+  <div class="row my-3">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a
+          class="nav-link link-dark {% if applications_list %}active{% endif %}"
+          href="{% url 'applications:applications_list' %}"
+        >
+          Все Заявки
+        </a>
+      </li>
+{% for department in departments %}
+      <li class="nav-item">
+        <a
+           class="nav-link link-dark {% if department_applications_list %}active{% endif %}"
+           href="{% url 'applications:department' department.slug %}"
+        >
+          {{ department.title }}
+        </a>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+{% endif %}
