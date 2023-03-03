@@ -10,7 +10,16 @@
    {% include 'applications/includes/switcher.html' %}
   {# <h3> Список Заявок: {{ cars_count }} ед. </h3> #}
 
-  <div class="container">
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+
+
+
+<div class="container card-body">
+  <form method="post">{% csrf_token %}
+
+  <div class="table">
     <table class="table table-light table-striped table-hover">
       <thead>
         <tr>
@@ -28,27 +37,43 @@
         </tr>
       </thead>
       <tbody>
-        {% for application in applications %}  {# нужно все переделывать под заявки #}
+        {% for form in formset %}{# нужно все переделывать под заявки #}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ application.brand }}</td>
-            <td>{{ application.reg_mark }}</td>
-            <td>{{ application.type_car }}</td>
-            <td>{{ application.route_movement }}</td>
-            <td>{{ application.time_delivery_car_on_base }}</td>
-            <td>{{ application.time_delivery_car_on_borehole }}</td>
-            <td>{{ application.quantity_hours }}</td>
-            <td>{{ application.note }}</td>
-            <td>{{ application.department }}</td>
-            <td>{{ application.pub_date }}</td>
+            <td>{{ form.brand|addstyle:'width: 130px' }}</td>
+            <td>{{ form.reg_mark|addstyle:'width: 100px' }} </td>
+            <td>{{ form.type_car|addstyle_disable:'width: 100px' }} </td>
+            <td>{{ form.route_movement|addstyle_disable:'width: 200px' }} </td>
+            <td>{{ form.time_delivery_car_on_base|addstyle_disable:'width: 80px' }} </td>
+            <td>{{ form.time_delivery_car_on_borehole|addstyle_disable:'width: 80px' }} </td>
+            <td>{{ form.quantity_hours|addstyle_disable:'width: 80px' }} </td>
+            <td>{{ form.note|addstyle_disable:'width: 150px' }} </td>
+            <td>{{ form.department|addstyle_disable:'width: 80px' }} </td>
+            <td>{{ form.pub_date }}</td>
           </tr>
-
-
-
         {% endfor %}
       </tbody>
     </table>
+  </div>
 
+      <div class="container">
+        <div class="d-flex justify-content-end" >
+          <button type="submit" class="btn btn-primary">
+            Закрытие
+          </button>
+        </div>
+      </div>
+
+  </form>
+</div>
+
+
+
+</div>
+</div>
+
+
+  {% comment %}
 <span style="font-size:28px">вывод через div (только одной заявки)</span>
 
                 <div class="container ">
@@ -64,11 +89,11 @@
                   {{ form.department|addclass:'form-control-sm ' }}
 
                 </div>
+{% endcomment %}
 
 
 
+  {# div закрывает table #}
 
-
-  </div>
    {% include 'applications/includes/paginator.html' %}
 {% endblock %}

@@ -5,8 +5,8 @@ from decouple import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# BASE_DIR = Path(__file__).resolve().parent.parent  # Старый вариант
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -17,6 +17,8 @@ SECRET_KEY = config('SECRET_KEY')  # Джанго ключ спрятан для
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'www.oat.pythonanywhere.com',
+    'oat.pythonanywhere.com',
     'localhost',
     '127.0.0.1',
     '[::1]',
@@ -124,6 +126,11 @@ USE_TZ = True
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 STATIC_URL = '/static/'
+
+# Включать при сборе статики для сервера (collectstatic)
+# сбор статики админки django
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

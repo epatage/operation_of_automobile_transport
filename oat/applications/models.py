@@ -1,22 +1,26 @@
 from django.db import models
 
-from cars.models import TypeCar
+from cars.models import TypeCar, Car
 
 
 class Application(models.Model):
-    reg_mark = models.CharField(
-        max_length=10,
+    reg_mark = models.ForeignKey(
+        Car,
+        blank=False,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='cars_mark',
         verbose_name='ГРЗ',
         help_text='Гос.рег.знак',
-        null=True,
-        blank=True,
     )
-    brand = models.CharField(
-        max_length=50,
+    brand = models.ForeignKey(
+        Car,
+        blank=False,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='cars_brand',
         verbose_name='Марка ТС',
         help_text='Марка транспортного средства',
-        null=True,
-        blank=True,
     )
     type_car = models.ForeignKey(
         TypeCar,

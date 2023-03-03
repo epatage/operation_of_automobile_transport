@@ -14,6 +14,10 @@ urlpatterns = [
     ),
     # Добавление заявки (сделать ссылку с главной страницы)
     path('add/', views.application_add, name='application_add'),
+
+    # # Добавление заявки через formset классом
+    # path('add/', views.ApplicationAddView.as_view(), name='application_add'),
+
     # Просмотр отдельной заявки (надо ли ???), туда добавить время подачи + инф.... нужно редактирование
     path('<int:application_id>/', views.application_detail, name='application_detail'),
     # Редактирование заявки (реализация ???)

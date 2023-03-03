@@ -27,6 +27,8 @@
           <div class="container card-body">
              <form method="post">{% csrf_token %}
 
+
+             {% comment %}
                 <table class="table table-light table-striped  table-bordered border-1 my-listing">
                   <thead>
                     <tr>
@@ -81,11 +83,161 @@
                   {{ form.department|addclass:'form-control-sm ' }}
 
                 </div>
+{% endcomment %}
+
+              {# FORMSET #}
 
 
 
+              <div class="">
+                <table class="table table-light table-striped table-bordered border-1 my-listing align-middle ">
+                {{ formset.management_form }}
+                  <thead class="align-middle">
+                    <tr>
+                      <th class="column-id" >Удалить</th>
+                      <th class="column-id" >Марка ТС</th>
+                      <th class="my-listing">ГРЗ</th>
+                      <th class="my-listing">Тип ТС</th>
+                      <th class="m-1">Маршрут движения</th>
+                      <th class="m-auto">Время подачи на БПО</th>
+                      <th class="m-lg-0">Время подачи на скважину</th>
+                      <th class="column-{{ f_name|slugify }}">Количество часов</th>
+                      <th class="column-{{ f_name|slugify }}">Примечание</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                      {% for form in formset %}
+                        {{ form.management_form }}
+                        <tr id="variants-{{ forloop.counter0 }}" class="hide_all" >
+                        {{ form.id }}
+                          <td>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{form.instance.pk}}">
+                              -
+                            </button>
+                          </td>
+                          <td class="column-id">{{ form.brand|addstyle:'width: 130px' }}</td>
+                          <td class="my-listing">{{ form.reg_mark|addstyle:'width: 100px' }}</td>
+                          <td class="my-listing">{{ form.type_car|addstyle:'width: 100px' }}</td>
+                          <td class="m-auto">{{ form.route_movement|addstyle:'width: 200px' }}</td>
+                          <td class="m-0">{{ form.time_delivery_car_on_base|addstyle:'width: 80px' }}</td>
+                          <td class="m-1">{{ form.time_delivery_car_on_borehole|addstyle:'width: 80px' }}</td>
+                          <td class="col">{{ form.quantity_hours|addstyle:'width: 80px' }}</td>
+                          <td class="col">{{ form.note|addstyle:'width: 200px' }}</td>
+                        </tr>
+
+                  </tbody>
+                   {% endfor %}
+                </table>
+              </div>
+              {% comment %}
+               <a href="#" id="add-formset-button" class="btn btn-secondary add-form">Add More</a>
+                <script>
+                   $(document).ready(function() {
+                      // when user clicks add more btn of variants
+                        $('.add-form').click(function(ev) {
+                            ev.preventDefault();
+                            var count = $('#item-form').children().length;
+                            var tmplMarkup = $('#variants-template').html();
+                            var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
+                            $('#item-form').append(compiledTmpl);
+
+                            // update form count
+                            $('#id_form-TOTAL_FORMS').attr('value', count+1);
+                        });
+                    });
+                </script>
+                {% endcomment %}
 
 
+
+               {% comment %}
+            <div  class="grid gap-0 row-gap-3">
+<form class="row gy-2 gx-3 align-items-center">
+              <div class="row row-cols-sm-auto g-0 align-items-center">
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя1" aria-label="Имя7">
+                </div>
+                <div class=" col-auto">
+                  <select class="form-control-sm" style="width: 100px" aria-label="asdddd" ></select>
+
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+                <div class=" col-auto">
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+                </div>
+              </div>
+
+
+  <div class="input-group">
+      {% for form in formset %}
+                  {{ form.brand|addclass:'form-control-sm ' }}
+                  {{ form.reg_mark|addclass:'form-control-sm ' }}
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя1" aria-label="Имя7">
+
+                  <select class="form-control-sm" style="width: 100px" aria-label="asdddd" ></select>
+
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+
+                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
+{% endfor %}
+              </div>
+</form>
+{% endcomment %}
+
+            {% comment %}
+ {% for form in formset %}
+                <div class="p-2 g-col-6"> {{ form.brand|addclass:'form-control-sm ' }}</div>
+                <div class="p-2 g-col-6">  {{ form.reg_mark|addclass:'form-control-sm ' }}</div>
+                 <div class="p-2 g-col-6"> {{ form.type_car|addclass:'form-control-sm ' }}</div>
+                  {{ form.route_movement|addclass:'form-control-sm ' }}
+                  {{ form.time_delivery_car_on_base|addclass:'form-control-sm ' }}
+                  {{ form.time_delivery_car_on_borehole|addclass:'form-control-sm ' }}
+                  {{ form.quantity_hours|addclass:'form-control-sm ' }}
+                  {{ form.note|addclass:'form-control-sm ' }}
+                  {{ form.department|addclass:'form-control-sm ' }}
+  {% endfor %}
+ </div>
+{% endcomment %}
 
                   <div class="d-flex justify-content-end" >
                     <button type="submit" class="btn btn-primary">
@@ -106,3 +258,4 @@
         </div>
       </div>
 {% endblock %}
+
