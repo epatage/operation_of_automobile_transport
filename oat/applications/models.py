@@ -1,12 +1,15 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 from cars.models import TypeCar, Car
+
+User = get_user_model()
 
 
 class Application(models.Model):
     reg_mark = models.ForeignKey(
         Car,
-        blank=False,
+        blank=True,
         null=True,
         on_delete=models.CASCADE,
         related_name='cars_mark',
@@ -15,7 +18,7 @@ class Application(models.Model):
     )
     brand = models.ForeignKey(
         Car,
-        blank=False,
+        blank=True,
         null=True,
         on_delete=models.CASCADE,
         related_name='cars_brand',
@@ -79,8 +82,22 @@ class Application(models.Model):
         blank=False,
     )
 
+    """
+    Заказчика нужно вынести в отдельную модель с ФИО, должностью, отделом.
+    В раздел отдела будет передаваться информация с пользователя подающего
+    заявку. Сделать связь многие-ко-многим.
+    """
+    customer = models.ForeignKey(
+        User,
+        related_name='applications',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Заказчик',
+    )
+
     def __str__(self):
-        return self.route_movement
+        return f'{self.department} {self.route_movement} {self.type_car}'
 
 
 class Department(models.Model):
