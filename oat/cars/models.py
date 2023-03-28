@@ -24,7 +24,7 @@ class Car(models.Model):
     )
 
     def __str__(self):
-        return self.reg_mark
+        return f'{self.reg_mark}'
 
 
 class Column(models.Model):

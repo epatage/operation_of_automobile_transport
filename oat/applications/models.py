@@ -68,7 +68,7 @@ class Application(models.Model):
     )
     department = models.ForeignKey(
         'Department',
-        blank=False,
+        blank=True,     # Менять на False
         null=True,
         on_delete=models.CASCADE,
         related_name='applications',
@@ -92,12 +92,12 @@ class Application(models.Model):
         related_name='applications',
         on_delete=models.CASCADE,
         null=True,
-        blank=True,
+        blank=True,     # Менять на False
         verbose_name='Заказчик',
     )
 
     def __str__(self):
-        return f'{self.department} {self.route_movement} {self.type_car}'
+        return f'{self.route_movement} {self.type_car}'
 
 
 class Department(models.Model):

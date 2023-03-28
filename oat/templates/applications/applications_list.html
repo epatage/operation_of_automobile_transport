@@ -20,8 +20,19 @@
   <form method="post">{% csrf_token %}
 
   <div class="table">
-    <table class="table table-light table-striped table-hover">
+    <table class="table table-light table-striped table-hover" id="formset">
+      {{ formset.management_form }}
+      {{ formset.non_form_errors.as_ul }}
+
+    {% for form in formset.forms %}
+      {% if forloop.first %}
       <thead>
+        <tr>
+          {% for field in form.visible_fields %}
+          <th>{{ field.label|capfirst }}</th>
+          {% endfor %}
+        </tr>
+      {% comment %}
         <tr>
           <th>№ п/п</th>
           <th>Марка ТС</th>
@@ -35,9 +46,55 @@
           <th>Цех/отдел</th>
           <th>Время подачи заявку</th>
         </tr>
+
+        {% endcomment %}
       </thead>
+      {% endif %}
+
+              <tr>
+                {% for field in form.visible_fields %}
+                <td>
+                  {# Include the hidden fields in the form #}
+                  {% if forloop.first %}
+                    {% for hidden in form.hidden_fields %}
+                      {{ hidden }}
+                    {% endfor %}
+                  {% endif %}
+                  {{ field.errors.as_ul }}
+                  {{ field }}
+                </td>
+                {% endfor %}
+              </tr>
+
       <tbody>
-        {% for form in formset %}{# нужно все переделывать под заявки #}
+
+     {#    {% for form in formset %}нужно все переделывать под заявки #}
+
+        {% comment %}
+          <tr>
+          {% for field in form.visible_fields %}
+              {{ field.errors.as_ul }}
+            <td>{{ forloop.counter }}</td>
+            <td> {{ field.label_tag }} {{ field }}</td>
+          ---
+
+            <td>{{ form.brand }}</td>
+            <td>{{ form.reg_mark }} </td>
+            <td>{{ form.type_car }} </td>
+            <td>{{ form.route_movement }} </td>
+            <td>{{ form.time_delivery_car_on_base }} </td>
+            <td>{{ form.time_delivery_car_on_borehole }} </td>
+            <td>{{ form.quantity_hours }} </td>
+            <td>{{ form.note }} </td>
+            <td>{{ form.department.title }} </td>
+            <td>{{ form.pub_date }}</td>
+           --
+            {% endfor %}
+          </tr>
+
+           {% endcomment %}
+
+          {% comment %}  Применены фильтры, которые не пропускают при закрытии заявки
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ form.brand|addstyle:'width: 130px' }}</td>
@@ -51,6 +108,7 @@
             <td>{{ form.department|addstyle_disable:'width: 80px' }} </td>
             <td>{{ form.pub_date }}</td>
           </tr>
+          {% endcomment %}
         {% endfor %}
       </tbody>
     </table>

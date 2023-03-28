@@ -13,21 +13,25 @@ from django.forms import modelformset_factory
 @login_required
 def applications_list(request):
     applications = Application.objects.all()
-    # вывод в форму (только по одному?)
-    # app = get_object_or_404(Application, pk=1)
-    # form = ApplicationEditForm(request.POST or None, instance=app)
 
     departments = Department.objects.all()
+    cars = Car.objects.all()
 
     if request.method == 'POST':
-        formset = ApplicationCloseForm(request.POST or None)
+        formset = ApplicationCloseFormSet(request.POST or None, queryset=applications)
+        for form in formset:
+            print(form)
         if formset.is_valid():
-            formset = formset.save(commit=False)
-            formset.save()
-            # do something.
-    else:
-        formset = ApplicationCloseFormSet(queryset=applications)
 
+            for form in formset:
+                print('valid')
+                form.save()
+            # formset = formset.save(commit=False)  # возврат несохраненных полей
+            # formset.save()
+
+            return render(request, 'applications/applications_list.html', {'formset': formset})
+    print('no valid')
+    formset = ApplicationCloseFormSet(queryset=applications)
     context = {
         'applications': applications,
         # 'page_obj': page_obj,
@@ -36,6 +40,9 @@ def applications_list(request):
         'is_edit': True,
         'departments': departments,
     }
+
+    return render(request, 'applications/applications_list.html', context)
+
 
     # if form.is_valid():
     #     form.save()
@@ -50,20 +57,16 @@ def applications_list(request):
 
     # Показывать по 10 записей на странице.
     # Показывать по фильру даты ????
-    paginator = Paginator(applications, 10)
+    # paginator = Paginator(applications, 10)
 
     # Из URL извлекаем номер запрошенной страницы - это значение параметра page
-    page_number = request.GET.get('page')
+    # page_number = request.GET.get('page')
 
     # Получаем набор записей для страницы с запрошенным номером
-    page_obj = paginator.get_page(page_number)
+    # page_obj = paginator.get_page(page_number)
     #######################
 
 
-
-
-
-    return render(request, 'applications/applications_list.html', context)
 
 
 # Список заявок по цеховым подразделениям
@@ -93,7 +96,7 @@ def application_add(request):
         formset = ApplicationAddFormSet(request.POST or None)
         if formset.is_valid():
             formset.save()
-            # do something.
+
     else:
         formset = ApplicationAddFormSet(queryset=Application.objects.none())
 
