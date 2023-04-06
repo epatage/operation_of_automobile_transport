@@ -27,6 +27,7 @@
         --font-main-color: #012533;
         --button-dark-color: #6ca3be;
         --font-dark-color: #012533;
+        --nav-link-active-color: #87b8d2;
       }
 
       .btn-main {
@@ -40,9 +41,14 @@
         --bs-btn-hover-border-color: #{shade-color(--button-dark-color, 10%)};
         --bs-btn-focus-shadow-rgb: var(--button-dark-color);
         --bs-btn-active-color: var(--bs-btn-hover-color);
-        --bs-btn-active-bg: #{shade-color($bd-violet, 20%)};
+        --bs-btn-active-bg: var(--button-dark-color);
         --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
       }
+
+      .nav-link {
+        --bs-nav-pills-link-active-bg: var(--nav-link-active-color);
+      }
+
     </style>
 </head>
 <body style="background-color: #79aec8">
