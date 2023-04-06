@@ -11,251 +11,101 @@
 {% endblock %}
 
 {% block content %}
-      <div class="container py-5">
-        <div class="row justify-content-center">
-          <div class="col">
-            <div class="card">
-              <div class="card-header">
-                {% if is_edit %}
-                  Редактировать заявку {# не реализовано #}
-                {% else %}
-                  Новая заявка
-                {% endif %}
-              </div>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          {% if is_edit %}
+            Редактировать заявку {# не реализовано #}
+          {% else %}
+            Новая заявка
+          {% endif %}
+        </div>
 
+        <div class="card-body">
+          <form class="form-control" method="post" id="form-container">{% csrf_token %}
 
-          <div class="container card-body">
-             <form method="post">{% csrf_token %}
+            <div class="">
+              {{ formset.management_form }}
+              {% for form in formset.forms %}
 
+                <div class="application-form container"> {# Блок для работы JS. Динамическое добавление заявки. #}
 
-             {% comment %}
-                <table class="table table-light table-striped  table-bordered border-1 my-listing">
-                  <thead>
-                    <tr>
-                      <th class="column-id">Марка ТС</th>
-                      <th class="my-listing">ГРЗ</th>
-                      <th class="my-listing">Тип ТС</th>
-                      <th class="m-1">Маршрут движения</th>
-                      <th class="m-auto">Время подачи на БПО</th>
-                      <th class="m-lg-0">Время подачи на скважину</th>
-                      <th class="column-{{ f_name|slugify }}">Количество часов</th>
-                      <th class="column-{{ f_name|slugify }}">Примечание</th>
-                      <th class="column-{{ f_name|slugify }}">Цех/отдел</th>
+                  <div class="row g-1 my-1">
+                    {% for field in form %}
+                      <div class="col d-block"
+                        {# Проверка поля на "Обязательное". Появляется лейбл. #}
+                        {% if field.field.required %}
+                          aria-required="true">
+                            <label for="id_text">
+                              <span class="required text-danger" style="font-size: x-small">
+                                Обязательное поле
+                              </span>
+                            </label>
+                        {% else %}
+                          aria-required="false">
+                          <label for="id_text"></label>
+                        {% endif %}
 
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                        <tr>
-                          <td class="column-id">{{ form.brand }}</td>
-                          <td class="my-listing">{{ form.reg_mark }}</td>
-                          <td class="my-listing">{{ form.type_car }}</td>
-                          <td class="m-auto">{{ form.route_movement }}</td>
-                          <td class="m-0">{{ form.time_delivery_car_on_base }}</td>
-                          <td class="m-1">{{ form.time_delivery_car_on_borehole }}</td>
-                          <td class="col">{{ form.quantity_hours }}</td>
-                          <td class="col">{{ form.note }}</td>
-                          <td class="col">{{ form.department }}</td>
-                        </tr>
-                  </tbody>
-                </table>
-
-             {#  наверное не пригодиться #}
-                {% if is_edit %}
-                   <div>
-                     <button type="submit" class="btn btn-info">
-                       <a href="{% url 'cars:car_delete' car.id %}" class="text-white">Удалить</a>
-                     </button>
-                   </div>
-                {% endif %}
-
-"форма через div"
-                <div class="container ">
-
-                  {{ form.brand|addclass:'form-control-sm ' }}
-                  {{ form.reg_mark|addclass:'form-control-sm ' }}
-                  {{ form.type_car|addclass:'form-control-sm ' }}
-                  {{ form.route_movement|addclass:'form-control-sm ' }}
-                  {{ form.time_delivery_car_on_base|addclass:'form-control-sm ' }}
-                  {{ form.time_delivery_car_on_borehole|addclass:'form-control-sm ' }}
-                  {{ form.quantity_hours|addclass:'form-control-sm ' }}
-                  {{ form.note|addclass:'form-control-sm ' }}
-                  {{ form.department|addclass:'form-control-sm ' }}
-
-                </div>
-{% endcomment %}
-
-              {# FORMSET #}
-
-
-
-              <div class="">
-                <table class="table table-light table-striped table-bordered border-1 my-listing align-middle ">
-                {{ formset.management_form }}
-                  <thead class="align-middle">
-                    <tr>
-                      <th class="column-id" >Удалить</th>
-                      <th class="column-id" >Марка ТС</th>
-                      <th class="my-listing">ГРЗ</th>
-                      <th class="my-listing">Тип ТС</th>
-                      <th class="m-1">Маршрут движения</th>
-                      <th class="m-auto">Время подачи на БПО</th>
-                      <th class="m-lg-0">Время подачи на скважину</th>
-                      <th class="column-{{ f_name|slugify }}">Количество часов</th>
-                      <th class="column-{{ f_name|slugify }}">Примечание</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                      {% for form in formset %}
-                        {{ form.management_form }}
-                        <tr id="variants-{{ forloop.counter0 }}" class="hide_all" >
-                        {{ form.id }}
-                          <td>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{form.instance.pk}}">
-                              -
-                            </button>
-                          </td>
-                          <td class="column-id">{{ form.brand|addstyle:'width: 130px' }}</td>
-                          <td class="my-listing">{{ form.reg_mark|addstyle:'width: 100px' }}</td>
-                          <td class="my-listing">{{ form.type_car|addstyle:'width: 100px' }}</td>
-                          <td class="m-auto">{{ form.route_movement|addstyle:'width: 200px' }}</td>
-                          <td class="m-0">{{ form.time_delivery_car_on_base|addstyle:'width: 80px' }}</td>
-                          <td class="m-1">{{ form.time_delivery_car_on_borehole|addstyle:'width: 80px' }}</td>
-                          <td class="col">{{ form.quantity_hours|addstyle:'width: 80px' }}</td>
-                          <td class="col">{{ form.note|addstyle:'width: 200px' }}</td>
-                        </tr>
-
-                  </tbody>
-                   {% endfor %}
-                </table>
-              </div>
-              {% comment %}
-               <a href="#" id="add-formset-button" class="btn btn-secondary add-form">Add More</a>
-                <script>
-                   $(document).ready(function() {
-                      // when user clicks add more btn of variants
-                        $('.add-form').click(function(ev) {
-                            ev.preventDefault();
-                            var count = $('#item-form').children().length;
-                            var tmplMarkup = $('#variants-template').html();
-                            var compiledTmpl = tmplMarkup.replace(/__prefix__/g, count);
-                            $('#item-form').append(compiledTmpl);
-
-                            // update form count
-                            $('#id_form-TOTAL_FORMS').attr('value', count+1);
-                        });
-                    });
-                </script>
-                {% endcomment %}
-
-
-
-               {% comment %}
-            <div  class="grid gap-0 row-gap-3">
-<form class="row gy-2 gx-3 align-items-center">
-              <div class="row row-cols-sm-auto g-0 align-items-center">
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя1" aria-label="Имя7">
-                </div>
-                <div class=" col-auto">
-                  <select class="form-control-sm" style="width: 100px" aria-label="asdddd" ></select>
-
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-                <div class=" col-auto">
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-                </div>
-              </div>
-
-
-  <div class="input-group">
-      {% for form in formset %}
-                  {{ form.brand|addclass:'form-control-sm ' }}
-                  {{ form.reg_mark|addclass:'form-control-sm ' }}
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя1" aria-label="Имя7">
-
-                  <select class="form-control-sm" style="width: 100px" aria-label="asdddd" ></select>
-
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-
-                  <input type="text" class="form-control-sm" style="width: 130px" placeholder="Имя2" aria-label="Имя33">
-{% endfor %}
-              </div>
-</form>
-{% endcomment %}
-
-            {% comment %}
- {% for form in formset %}
-                <div class="p-2 g-col-6"> {{ form.brand|addclass:'form-control-sm ' }}</div>
-                <div class="p-2 g-col-6">  {{ form.reg_mark|addclass:'form-control-sm ' }}</div>
-                 <div class="p-2 g-col-6"> {{ form.type_car|addclass:'form-control-sm ' }}</div>
-                  {{ form.route_movement|addclass:'form-control-sm ' }}
-                  {{ form.time_delivery_car_on_base|addclass:'form-control-sm ' }}
-                  {{ form.time_delivery_car_on_borehole|addclass:'form-control-sm ' }}
-                  {{ form.quantity_hours|addclass:'form-control-sm ' }}
-                  {{ form.note|addclass:'form-control-sm ' }}
-                  {{ form.department|addclass:'form-control-sm ' }}
-  {% endfor %}
- </div>
-{% endcomment %}
-
-                  <div class="d-flex justify-content-end" >
-                    <button type="submit" class="btn btn-primary">
-                      {% if is_edit %}
-                        Сохранить
-                      {% else %}
-                        Добавить
-                      {% endif %}
-                    </button>
+                        {{ field }}
+                      </div>
+                    {% endfor %}
                   </div>
 
-                 </form>
-              </div>
-
-
+                  <hr>
+                </div>
+              {% endfor %}
             </div>
-          </div>
+
+            {# Кнопки формы. Добавление заявки "+1" и отправка заявки. #}
+            {# По id="add-form" работает скрипт на добавление формы "+1". #}
+            <div id="add-form" class="d-grid mx-auto gap-2">
+              <button id="add-form" type="button" class="btn btn-outline-success ">
+                + 1 заявка
+              </button>
+            </div>
+
+            <div class="d-flex justify-content-end my-3" >
+              <button type="submit" class="btn btn-main">
+                {% if is_edit %}
+                  Сохранить
+                {% else %}
+                  Отправить
+                {% endif %}
+              </button>
+            </div>
+
+          </form>
         </div>
+
       </div>
+    </div>
+  </div>
+</div>
+
+<script>
+      let applicationForm = document.querySelectorAll(".application-form")
+      let container = document.querySelector("#form-container")
+      let addButton = document.querySelector("#add-form")
+      let totalForms = document.querySelector("#id_form-TOTAL_FORMS")
+
+      let formNum = applicationForm.length-1
+      addButton.addEventListener('click', addForm)
+
+      function addForm(e){
+          e.preventDefault()
+
+          let newForm = applicationForm[0].cloneNode(true)
+          let formRegex = RegExp(`form-(\\d){1}-`,'g')
+
+          formNum++
+          newForm.innerHTML = newForm.innerHTML.replace(formRegex, `form-${formNum}-`)
+          container.insertBefore(newForm, addButton)
+
+          totalForms.setAttribute('value', `${formNum+1}`)
+      }
+  </script>
+
 {% endblock %}
 
