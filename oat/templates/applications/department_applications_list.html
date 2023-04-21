@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for application in applications %}  {# нужно все переделывать под заявки #}
+        {% for application in formset %}  {# нужно все переделывать под заявки #}
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ application.brand }}</td>
@@ -44,5 +44,5 @@
       </tbody>
     </table>
   </div>
-   {% include 'applications/includes/paginator.html' %}
+
 {% endblock %}

@@ -96,6 +96,9 @@ class Application(models.Model):
         verbose_name='Заказчик',
     )
 
+    class Meta:
+        ordering = ('-pub_date',)
+
     def __str__(self):
         return f'{self.route_movement} {self.type_car}'
 

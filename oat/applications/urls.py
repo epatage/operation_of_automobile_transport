@@ -1,11 +1,14 @@
-from django.urls import path
+from django.urls import path, register_converter
 from . import views
+from .converters import DateConverter
 
 app_name = 'applications'
 
+register_converter(DateConverter, 'date')
+
 urlpatterns = [
     # Общий список заявок (сделать разбиение по дням паджинатором)
-    path('', views.applications_list, name='applications_list'),
+    path('all/<date:day>/', views.applications_list, name='applications_list'),
     # Список заявок по подразделениям (отдельные страницы)
     path(
         'department/<slug:slug>/',   # Создать модель цеховых подразделений

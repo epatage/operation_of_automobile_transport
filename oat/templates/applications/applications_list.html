@@ -9,14 +9,20 @@
 {% block content %}
    {% include 'applications/includes/switcher.html' %}
   {# <h3> Список Заявок: {{ cars_count }} ед. </h3> #}
-
+    {% include 'applications/includes/switcher_date.html' %}
 
 <div class="container py-5">
   <div class="row justify-content-center">
 
 
 
+
+
 <div class="container card-body">
+  {# блок с датами #}
+  <div class="container card-body">
+    Data: {{ show_date }}
+
   <form method="post">{% csrf_token %}
 
   <div class="table">
@@ -24,105 +30,99 @@
       {{ formset.management_form }}
       {{ formset.non_form_errors.as_ul }}
 
-    {% for form in formset.forms %}
-      {% if forloop.first %}
-      <thead>
-        <tr>
-          {% for field in form.visible_fields %}
-          <th>{{ field.label|capfirst }}</th>
-          {% endfor %}
-        </tr>
-      {% comment %}
-        <tr>
-          <th>№ п/п</th>
-          <th>Марка ТС</th>
-          <th>ГРЗ</th>
-          <th>Тип ТС</th>
-          <th>Маршрут движения</th>
-          <th>Время подачи на БПО</th>
-          <th>Время подачи на скважину</th>
-          <th>Количество часов</th>
-          <th>Примечание</th>
-          <th>Цех/отдел</th>
-          <th>Время подачи заявку</th>
-        </tr>
-
-        {% endcomment %}
-      </thead>
-      {% endif %}
-
-              <tr>
-                {% for field in form.visible_fields %}
-                <td>
-                  {# Include the hidden fields in the form #}
-                  {% if forloop.first %}
-                    {% for hidden in form.hidden_fields %}
-                      {{ hidden }}
-                    {% endfor %}
-                  {% endif %}
-                  {{ field.errors.as_ul }}
-                  {{ field }}
-                </td>
-                {% endfor %}
-              </tr>
-
-      <tbody>
-
-     {#    {% for form in formset %}нужно все переделывать под заявки #}
-
-        {% comment %}
+      {% for form in formset.forms %}
+        {% if forloop.first %}
+        <thead>
           <tr>
-          {% for field in form.visible_fields %}
-              {{ field.errors.as_ul }}
-            <td>{{ forloop.counter }}</td>
-            <td> {{ field.label_tag }} {{ field }}</td>
-          ---
+            {% for field in form.visible_fields %}
+            <th>{{ field.label|capfirst }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        {% endif %}
 
-            <td>{{ form.brand }}</td>
-            <td>{{ form.reg_mark }} </td>
-            <td>{{ form.type_car }} </td>
-            <td>{{ form.route_movement }} </td>
-            <td>{{ form.time_delivery_car_on_base }} </td>
-            <td>{{ form.time_delivery_car_on_borehole }} </td>
-            <td>{{ form.quantity_hours }} </td>
-            <td>{{ form.note }} </td>
-            <td>{{ form.department.title }} </td>
-            <td>{{ form.pub_date }}</td>
-           --
+        <tbody>
+          <tr>
+            {% for field in form.visible_fields %}
+            <td>
+              {# Include the hidden fields in the form #}
+              {% if forloop.first %}
+                {% for hidden in form.hidden_fields %}
+                  {{ hidden }}
+                {% endfor %}
+              {% endif %}
+              {{ field.errors.as_ul }}
+              {{ field }}
+            </td>
             {% endfor %}
           </tr>
 
-           {% endcomment %}
-
-          {% comment %}  Применены фильтры, которые не пропускают при закрытии заявки
-          <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ form.brand|addstyle:'width: 130px' }}</td>
-            <td>{{ form.reg_mark|addstyle:'width: 100px' }} </td>
-            <td>{{ form.type_car|addstyle_disable:'width: 100px' }} </td>
-            <td>{{ form.route_movement|addstyle_disable:'width: 200px' }} </td>
-            <td>{{ form.time_delivery_car_on_base|addstyle_disable:'width: 80px' }} </td>
-            <td>{{ form.time_delivery_car_on_borehole|addstyle_disable:'width: 80px' }} </td>
-            <td>{{ form.quantity_hours|addstyle_disable:'width: 80px' }} </td>
-            <td>{{ form.note|addstyle_disable:'width: 150px' }} </td>
-            <td>{{ form.department|addstyle_disable:'width: 80px' }} </td>
-            <td>{{ form.pub_date }}</td>
-          </tr>
-          {% endcomment %}
         {% endfor %}
       </tbody>
     </table>
   </div>
 
+
+
+
+{% comment %}
+Реализация через дивы
+
+<div class="container card-body">
+  <form method="post">{% csrf_token %}
+
+  <div class="table">
+    <div>
+      {{ formset.management_form }}
+      {{ formset.non_form_errors.as_ul }}
+
+      {% for form in formset.forms %}
+        {% if forloop.first %}
+        <div>
+
+            {% for field in form.visible_fields %}
+            <th>{{ field.label|capfirst }}</th>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+
+        <div>
+          <div>
+            {% for field in form.visible_fields %}
+            <td>
+              {# Include the hidden fields in the form #}
+              {% if forloop.first %}
+                {% for hidden in form.hidden_fields %}
+                  {{ hidden }}
+                {% endfor %}
+              {% endif %}
+              {{ field.errors.as_ul }}
+              {{ field }}
+            </td>
+            {% endfor %}
+          </div>
+
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endcomment %}
+
+
+
+
       <div class="container">
         <div class="d-flex justify-content-end" >
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn btn-main">
             Закрытие
           </button>
         </div>
       </div>
 
   </form>
+  </div>
 </div>
 
 
@@ -131,27 +131,6 @@
 </div>
 
 
-  {% comment %}
-<span style="font-size:28px">вывод через div (только одной заявки)</span>
-
-                <div class="container ">
-
-                  {{ form.brand|addclass:'form-control-sm ' }}
-                  {{ form.reg_mark|addclass:'form-control-sm ' }}
-                  {{ form.type_car|addclass:'form-control-sm ' }}
-                  {{ form.route_movement|addclass:'form-control-sm ' }}
-                  {{ form.time_delivery_car_on_base|addclass:'form-control-sm ' }}
-                  {{ form.time_delivery_car_on_borehole|addclass:'form-control-sm ' }}
-                  {{ form.quantity_hours|addclass:'form-control-sm ' }}
-                  {{ form.note|addclass:'form-control-sm ' }}
-                  {{ form.department|addclass:'form-control-sm ' }}
-
-                </div>
-{% endcomment %}
 
 
-
-  {# div закрывает table #}
-
-   {% include 'applications/includes/paginator.html' %}
 {% endblock %}

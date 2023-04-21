@@ -1,0 +1,26 @@
+{% if user.is_authenticated %}
+
+
+  <div class="row my-1">
+      <ul class="nav nav-tabs ">
+        {% for day in days %}
+        <li class="nav-item" style="width: 40px">
+          <a class="nav-link {% if department_applications_list %}active{% endif %}" aria-current="true"
+             href="{% url 'applications:applications_list' day %}">
+            {{ day }}
+          </a>
+        </li>
+        {% endfor %}
+        <li class="nav-item">
+          <a class="nav-link" href="#">2</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ">3</a>
+        </li>
+      </ul>
+
+  </div>
+
+
+
+{% endif %}

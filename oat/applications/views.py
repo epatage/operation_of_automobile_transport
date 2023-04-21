@@ -7,15 +7,40 @@ from .forms import ApplicationAddForm, ApplicationEditForm, ApplicationAddFormSe
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.forms import modelformset_factory
+import datetime
+import time
+from time import gmtime, strftime
+
+
+def paginator(request, queryset):
+    """Функция разделения (пагинации) заявок по датам."""
+    paginator = Paginator(queryset, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return {'page_obj': page_obj}
 
 
 # Общий список заявок на главной странице
 @login_required
-def applications_list(request):
-    applications = Application.objects.all()
+def applications_list(request, day):
+    date = datetime.date(2023, 4, 7)
+
+    show_date = date.strftime("%Y-%m-%d")
+    print(show_date)
+    showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    # print(showtime)
+    days = range(1, 32)
+
+    applications = Application.objects.filter(pub_date=day) #__year=2023, pub_date__month=4, pub_date__day=day)
 
     departments = Department.objects.all()
     cars = Car.objects.all()
+
+    # date = datetime.date(*time.strptime('%s-%s' % ('2023', 'апрель'), '%Y-%b')[:3])
+
+    dates = Application.objects.all()[3]
+    # print(dates.pub_date)
 
     if request.method == 'POST':
         formset = ApplicationCloseFormSet(request.POST, queryset=applications)
@@ -28,39 +53,15 @@ def applications_list(request):
     formset = ApplicationCloseFormSet(queryset=applications)
     context = {
         'applications': applications,
-        # 'page_obj': page_obj,
+        'days': days,
+        'dates': dates,
         'formset': formset,
-        # 'form': form,
         'is_edit': True,
         'departments': departments,
+        'show_date': show_date,
     }
 
     return render(request, 'applications/applications_list.html', context)
-
-
-    # if form.is_valid():
-    #     form.save()
-
-
-
-    ##################### paginator
-    # applications = Application.objects.all().order_by('-pub_date')  # Порядок определить в МЕТА
-    # Если порядок сортировки определен в классе Meta модели,
-    # запрос будет выглядеть так:
-    # post_list = Post.objects.all()
-
-    # Показывать по 10 записей на странице.
-    # Показывать по фильру даты ????
-    # paginator = Paginator(applications, 10)
-
-    # Из URL извлекаем номер запрошенной страницы - это значение параметра page
-    # page_number = request.GET.get('page')
-
-    # Получаем набор записей для страницы с запрошенным номером
-    # page_obj = paginator.get_page(page_number)
-    #######################
-
-
 
 
 # Список заявок по цеховым подразделениям
@@ -71,10 +72,13 @@ def department_applications_list(request, slug):
 
     departments = Department.objects.all()
 
+    formset = ApplicationCloseFormSet(queryset=applications)
+
     context = {
         # 'page_obj': page_obj,
         'applications': applications,
         'departments': departments,
+        'formset': formset,
     }
 
     return render(request, 'applications/department_applications_list.html', context)
