@@ -7,8 +7,9 @@ app_name = 'applications'
 register_converter(DateConverter, 'date')
 
 urlpatterns = [
+    path('all/', views.applications_list_, name='applications_list_all'),
     # Общий список заявок (сделать разбиение по дням паджинатором)
-    path('all/<date:day>/', views.applications_list, name='applications_list'),
+    path('all/<year>/<month>/<day>/', views.applications_list, name='applications_list'),
     # Список заявок по подразделениям (отдельные страницы)
     path(
         'department/<slug:slug>/',   # Создать модель цеховых подразделений

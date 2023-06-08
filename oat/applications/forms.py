@@ -2,6 +2,7 @@ from django import forms
 from django.forms import inlineformset_factory, modelformset_factory
 from .models import Application
 from cars.models import Car
+from .validators import validate_not_empty
 
 
 class ApplicationAddForm(forms.ModelForm):
@@ -129,3 +130,27 @@ ApplicationCloseFormSet = modelformset_factory(
     extra=0,
     can_delete=False,
 )
+
+class DateForm(forms.Form):
+    """Форма опредения даты."""
+    year = forms.IntegerField(
+        label='Год',
+        widget=forms.TextInput(attrs={
+                'class': 'form-control-sm',
+                'style': 'width: 200px',
+        }), validators=[validate_not_empty]
+    )
+    month = forms.IntegerField(
+        label='Месяц',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control-sm',
+            'style': 'width: 200px',
+        }), validators=[validate_not_empty]
+    )
+    day = forms.IntegerField(
+        label='День',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control-sm',
+            'style': 'width: 200px',
+        }), validators=[validate_not_empty]
+    )

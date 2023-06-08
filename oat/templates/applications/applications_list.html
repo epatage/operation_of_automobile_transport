@@ -8,8 +8,43 @@
 
 {% block content %}
    {% include 'applications/includes/switcher.html' %}
-  {# <h3> Список Заявок: {{ cars_count }} ед. </h3> #}
-    {% include 'applications/includes/switcher_date.html' %}
+{#   <h3> Список Заявок: {{ cars_count }} ед. </h3>#}
+{#  переключатлеь по дням месяца. Возможно, не нужен.  {% include 'applications/includes/switcher_date.html' %}#}
+
+      <div>
+        <form action="{% url 'applications:applications_list' year month day %}" method="get" >
+          {{ date.management_form }}
+          <div class="form-group">
+            <div class="container-fluid text-center overflow-hidden">
+              <div class="row ">
+                <div class="col">
+                  <div class="text fw-bold" style="font-size: larger">
+                    Текущая дата : {{ year }} - {{ month }} - {{ day }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row justify-content-md-center">
+                {% for field in date %}
+                  <div class="col-md-auto">
+                    {{ field.label_tag }}{{ field }}
+                  </div>
+                {% endfor %}
+
+                <div class="col-lg-2">
+                  <button name="update" type="submit" class="btn btn-main">
+                    Обновить
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+
+
 
 <div class="container py-5">
   <div class="row justify-content-center">
@@ -19,11 +54,9 @@
 
 
 <div class="container card-body">
-  {# блок с датами #}
-  <div class="container card-body">
-    Data: {{ show_date }}
 
-  <form method="post">{% csrf_token %}
+  <form method="post" action="{% url 'applications:applications_list' year month day %}">
+    {% csrf_token %}
 
   <div class="table">
     <table class="table table-light table-striped table-hover" id="formset">
@@ -115,14 +148,14 @@
 
       <div class="container">
         <div class="d-flex justify-content-end" >
-          <button type="submit" class="btn btn-main">
+          <button name="close" type="submit" class="btn btn-main">
             Закрытие
           </button>
         </div>
       </div>
 
   </form>
-  </div>
+
 </div>
 
 

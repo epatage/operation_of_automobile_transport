@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .models import Application, Department
 from cars.models import TypeCar, Car
-from .forms import ApplicationAddForm, ApplicationEditForm, ApplicationAddFormSet, ApplicationCloseForm, ApplicationCloseFormSet
+from .forms import DateForm, ApplicationAddForm, ApplicationEditForm, ApplicationAddFormSet, ApplicationCloseForm, ApplicationCloseFormSet
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.forms import modelformset_factory
@@ -23,24 +23,11 @@ def paginator(request, queryset):
 
 # Общий список заявок на главной странице
 @login_required
-def applications_list(request, day):
-    date = datetime.date(2023, 4, 7)
-
-    show_date = date.strftime("%Y-%m-%d")
-    print(show_date)
-    showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    # print(showtime)
-    days = range(1, 32)
-
-    applications = Application.objects.filter(pub_date=day) #__year=2023, pub_date__month=4, pub_date__day=day)
+def applications_list_(request):
+    applications = Application.objects.all()
 
     departments = Department.objects.all()
     cars = Car.objects.all()
-
-    # date = datetime.date(*time.strptime('%s-%s' % ('2023', 'апрель'), '%Y-%b')[:3])
-
-    dates = Application.objects.all()[3]
-    # print(dates.pub_date)
 
     if request.method == 'POST':
         formset = ApplicationCloseFormSet(request.POST, queryset=applications)
@@ -53,16 +40,72 @@ def applications_list(request, day):
     formset = ApplicationCloseFormSet(queryset=applications)
     context = {
         'applications': applications,
-        'days': days,
-        'dates': dates,
         'formset': formset,
         'is_edit': True,
         'departments': departments,
-        'show_date': show_date,
     }
 
     return render(request, 'applications/applications_list.html', context)
 
+
+
+# Общий список заявок на главной странице (по дням)
+@login_required
+def applications_list(request, year, month, day):
+    # date = datetime.date(int(year), int(month), int(day))
+    # show_date = date.strftime("%Y-%m-%d")
+    # print(show_date, 'show_date')
+
+    # dt_now = datetime.datetime.now()
+    # print(dt_now)
+
+    departments = Department.objects.all()
+
+    date = DateForm(request.GET or None, initial={'year': year, 'month': month, 'day': day})
+
+    if request.method == 'GET':
+        if date.is_valid():
+            year = date.cleaned_data['year']
+            month = date.cleaned_data['month']
+            day = date.cleaned_data['day']
+        applications = Application.objects.filter(pub_date__year=year, pub_date__month=month, pub_date__day=day)
+
+        formset = ApplicationCloseFormSet(queryset=applications)
+        context = {
+            'applications': applications,
+            'formset': formset,
+            'departments': departments,
+            'year': year,
+            'month': month,
+            'day': day,
+            'date': date,
+        }
+
+        return render(request, 'applications/applications_list.html', context)
+
+    applications = Application.objects.filter(pub_date__year=year, pub_date__month=month, pub_date__day=day)
+
+    if request.method == 'POST':
+        formset = ApplicationCloseFormSet(request.POST, queryset=applications)
+        if formset.is_valid():
+            # for form in formset:
+            #     form.save()
+            # formset = formset.save(commit=False)  # возврат несохраненных полей
+            formset.save()
+
+    formset = ApplicationCloseFormSet(queryset=applications)
+    context = {
+        'applications': applications,
+        'day': day,
+        'month': month,
+        'year': year,
+        'formset': formset,
+        'is_edit': True,
+        'departments': departments,
+        'date': date,
+    }
+
+    return render(request, 'applications/applications_list.html', context)
 
 # Список заявок по цеховым подразделениям
 @login_required
@@ -94,14 +137,18 @@ def application_add(request):
             for form in formset.deleted_objects:
                 form.delete()
 
-            return redirect('applications:applications_list')
+            dt_now = datetime.datetime.now()
+            year, month, day = dt_now.year, dt_now.month, dt_now.day
 
-    else:
-        formset = ApplicationAddFormSet(queryset=Application.objects.none())
+            return redirect(
+                'applications:applications_list', year, month, day
+            )
 
-    context = {'formset': formset}
+    formset = ApplicationAddFormSet(queryset=Application.objects.none())
 
-    return render(request, 'applications/application_add.html', context)
+    return render(
+        request, 'applications/application_add.html', {'formset': formset}
+    )
 
 
 # Просмотр отдельной заявки (убрать?)
