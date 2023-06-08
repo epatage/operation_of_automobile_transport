@@ -86,7 +86,7 @@ def applications_list(request, year, month, day):
     applications = Application.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
 
     if request.method == 'POST':
-        formset = ApplicationCloseFormSet(request.POST, queryset=applications)
+        formset = ApplicationCloseFormSet(request.POST or None, queryset=applications)
         if formset.is_valid():
             # for form in formset:
             #     form.save()
