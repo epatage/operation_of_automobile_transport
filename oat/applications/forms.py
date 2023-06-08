@@ -10,6 +10,7 @@ class ApplicationAddForm(forms.ModelForm):
     class Meta:
         model = Application
         fields = (
+            'order_date',
             'type_car',
             'route_movement',
             'time_delivery_car_on_base',
@@ -19,6 +20,11 @@ class ApplicationAddForm(forms.ModelForm):
             'department',  # впоследствии нужно убрать !!! (меняется на request.customer)
         )
         widgets = {
+            'order_date': forms.TextInput(attrs={
+                'class': 'form-control-sm',
+                'style': 'width: 150px',
+                'placeholder': 'Дата заявки'
+            }),
             'type_car': forms.Select(attrs={
                 'class': 'form-control-sm',
                 'style': 'width: 100px',

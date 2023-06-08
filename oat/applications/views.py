@@ -68,7 +68,7 @@ def applications_list(request, year, month, day):
             year = date.cleaned_data['year']
             month = date.cleaned_data['month']
             day = date.cleaned_data['day']
-        applications = Application.objects.filter(pub_date__year=year, pub_date__month=month, pub_date__day=day)
+        applications = Application.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
 
         formset = ApplicationCloseFormSet(queryset=applications)
         context = {
@@ -83,7 +83,7 @@ def applications_list(request, year, month, day):
 
         return render(request, 'applications/applications_list.html', context)
 
-    applications = Application.objects.filter(pub_date__year=year, pub_date__month=month, pub_date__day=day)
+    applications = Application.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
 
     if request.method == 'POST':
         formset = ApplicationCloseFormSet(request.POST, queryset=applications)

@@ -24,7 +24,8 @@
         </div>
 
         <div class="card-body">
-          <form class="form-control" method="post" id="form-container">{% csrf_token %}
+          <form class="form-control" method="post" id="form-container">
+            {% csrf_token %}
 
             <div class="">
               {{ formset.management_form }}

@@ -81,6 +81,12 @@ class Application(models.Model):
         null=True,
         blank=False,
     )
+    order_date = models.DateField(
+        'Дата заявки',
+        null=True,
+        blank=False,
+        help_text='Укажите дату на которую заявляется транспорт',
+    )
 
     """
     Заказчика нужно вынести в отдельную модель с ФИО, должностью, отделом.
