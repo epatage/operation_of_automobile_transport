@@ -48,16 +48,30 @@ def applications_list_(request):
     return render(request, 'applications/applications_list.html', context)
 
 
+# Стартовая страница
+@login_required
+def home_page(request):
+    dt_now = datetime.datetime.now()
+
+    return redirect(
+        'applications:applications_list',
+        year=dt_now.year,
+        month=dt_now.month,
+        day=dt_now.day,
+    )
+
 
 # Общий список заявок на главной странице (по дням)
 @login_required
-def applications_list(request, year, month, day):
+def applications_list(request, year=None, month=None, day=None):
     # date = datetime.date(int(year), int(month), int(day))
     # show_date = date.strftime("%Y-%m-%d")
     # print(show_date, 'show_date')
+    print('<------------')
+    if not year or not month or not day:
+        dt_now = datetime.datetime.now()
 
-    # dt_now = datetime.datetime.now()
-    # print(dt_now)
+        print(dt_now)
 
     departments = Department.objects.all()
 

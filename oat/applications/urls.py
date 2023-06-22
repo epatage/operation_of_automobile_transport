@@ -7,6 +7,8 @@ app_name = 'applications'
 register_converter(DateConverter, 'date')
 
 urlpatterns = [
+    path('', views.home_page, name='home_page'),  # Стартовая страница
+
     path('all/', views.applications_list_, name='applications_list_all'),
     # Общий список заявок (сделать разбиение по дням паджинатором)
     path('all/<year>/<month>/<day>/', views.applications_list, name='applications_list'),
