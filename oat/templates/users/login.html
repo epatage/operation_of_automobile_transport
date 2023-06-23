@@ -1,12 +1,20 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Войти{% endblock %}
 {% block content %}
 {% load user_filters %}
   <div class="row justify-content-center">
-    <div class="col-md-8 p-5">
+    <div class="col-md-4 p-4">
+        <div class="container text-center ">
+
+            <div class="figure-img" >
+              <img src="{% static 'img/logo.png' %}" width="120" height="120"  class="img-circle" >
+            </div>
+
+        </div>
       <div class="card">
         <div class="card-header">
-          Войти на сайт
+          Авторизация
         </div>
         <div class="card-body">
           {% if form.errors %}
@@ -32,7 +40,7 @@
           {% csrf_token %}
 
           {% for field in form %}
-            <div class="form-group row my-3"
+            <div class="form-group row my-2"
               {% if field.field.required %} 
                 aria-required="true"
               {% else %}
@@ -55,17 +63,27 @@
               </div>
             </div>
           {% endfor %}
-          <div class="col-md-6 offset-md-4">
-            <button type="submit" class="btn btn-primary">
-              Войти
-            </button>
-            <a href="{% url 'users:password_reset_form' %}" class="btn btn-link">
-              Забыли пароль?
-            </a>
+          <div class="container">
+            <div class="row py-2">
+              <button type="submit" class="btn btn-main">
+                Войти
+              </button>
+            </div>
+            <div class="row ">
+              <a href="{% url 'users:password_reset_form' %}" class="btn btn-link" style="color: #6ca3be">
+                Забыли пароль?
+              </a>
+            </div>
           </div>
           </form>
         </div> <!-- card body -->
       </div> <!-- card -->
+      <div class="container py-3  text-center">
+        <div class="text-center">© {{ year }} Copyright</div>
+        <div class="">Эксплуатация автомобильного транспорта</div>
+      </div>
     </div> <!-- col -->
   </div> <!-- row -->
 {% endblock %}
+
+       {% include 'includes/footer.html' %}
