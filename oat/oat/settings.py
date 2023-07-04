@@ -131,7 +131,7 @@ STATIC_URL = '/static/'
 
 # Включать при сборе статики для сервера (collectstatic)
 # сбор статики админки django
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATIC_ROOT = os.path.join(BASE_DIR, '/static/')
 
 
 # Default primary key field type
