@@ -1,0 +1,10 @@
+
+.table-applictaion {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+}
+.table-applictaion thead tr {
+    background-color: #87b8d2;
+}
