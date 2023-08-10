@@ -117,15 +117,15 @@ class ApplicationCloseForm(forms.ModelForm):
         )
 
         widgets = {
-            'reg_mark': forms.Select(attrs={'style': 'width: 100px'}),
-            'brand': forms.Select(attrs={'style': 'width: 130px'}),
-            'type_car': forms.Select(attrs={'style': 'width: 100px'}),
-            'route_movement': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 200px'}),
-            'time_delivery_car_on_base': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 80px'}),
-            'time_delivery_car_on_borehole': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 80px'}),
-            'quantity_hours': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 80px'}),
-            'note': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 150px'}),
-            'department': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 80px'}),
+            'brand': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'reg_mark': forms.Select(attrs={'style': 'width: 100%'}),
+            'type_car': forms.Select(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'route_movement': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'time_delivery_car_on_base': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'time_delivery_car_on_borehole': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'quantity_hours': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'note': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'department': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
         }
 
 

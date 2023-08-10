@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% load static %}
 {% load user_filters %}
+{% load static %}
 
 {% block title %}
   Список заявок
@@ -58,45 +58,49 @@
   <form method="post" action="{% url 'applications:applications_list' year month day %}">
     {% csrf_token %}
 
-  <div class="table">
-    <table class="table table-light table-striped table-hover" id="formset">
+{#  <div class="table ">#}
+{#    <table class="table table-light table-striped table-hover" id="formset">#}
+    <table class="table table-applictaion " id="">
       {{ formset.management_form }}
       {{ formset.non_form_errors.as_ul }}
 
       {% for form in formset.forms %}
         {% if forloop.first %}
-        <thead>
-          <tr>
-            {% for field in form.visible_fields %}
-            <th>{{ field.label|capfirst }}</th>
-            {% endfor %}
-          </tr>
-        </thead>
+          <thead>
+            <tr>
+              {% for field in form.visible_fields %}
+                <th>{{ field.label|capfirst }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
         {% endif %}
 
         <tbody>
           <tr>
             {% for field in form.visible_fields %}
-            <td>
+              <td>
 
-              {# Блок позволяет сохранять изменения при выборе/изменении ТС на главной странице #}
-              {# Include the hidden fields in the form #}
-               {% if forloop.first %}
-               {% for hidden in form.hidden_fields %}
-               {{ hidden }}
-               {% endfor %}
-               {% endif %}
+{#                 Блок позволяет сохранять изменения при выборе/изменении ТС на главной странице#}
+{#                 Include the hidden fields in the form#}
+                 {% if forloop.first %}
+                 {% for hidden in form.hidden_fields %}
+                 {{ hidden }}
+                 {% endfor %}
+                 {% endif %}
 
-              {{ field.errors.as_ul }}
-              {{ field }}
-            </td>
+
+                {{ field.errors.as_ul }}
+                {{ field|addclass:'input-box' }}
+              </td>
+{#              <td>{{ form.car.brand }}</td>#}
+{#              <td>{{ form.reg_mark|addclass:'input-box' }}</td>#}
+{#              <td>{{ form.type_car|addclass:'input-box' }}</td>#}
             {% endfor %}
           </tr>
-
-        {% endfor %}
-      </tbody>
+        </tbody>
+      {% endfor %}
     </table>
-  </div>
+{#  </div>#}
 
 
 
@@ -159,6 +163,38 @@
 
   </form>
 
+{#<style>#}
+{#  .table-applictaion {#}
+{#    border-collapse: collapse;#}
+{#    margin: 25px 0;#}
+{#    font-size: 0.9em;#}
+{#    min-width: 400px;#}
+{#.table-applictaion thead tr {#}
+{#    background-color: #87b8d2;#}
+{#    color: #ffffff;#}
+{#    text-align: center;#}
+{#</style>#}
+
+
+{#<table class="table table-applictaion">#}
+{#        <thead>#}
+{#          <tr>#}
+{#            <th>Разное</th>#}
+{#            <th>Всякое</th>#}
+{#          </tr>#}
+{#        </thead>#}
+{#    <tbody>#}
+{#      <tr>#}
+{#        <td>1</td>#}
+{#        <td>2</td>#}
+{#      </tr>#}
+{#      <tr>#}
+{#        <td>3</td>#}
+{#        <td>4</td>#}
+{#      </tr>#}
+{#    </tbody>#}
+{##}
+{#</table>#}
 </div>
 
 
