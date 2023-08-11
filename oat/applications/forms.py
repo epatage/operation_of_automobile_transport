@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import inlineformset_factory, modelformset_factory
 from .models import Application
-from cars.models import Car
+from cars.models import Car, TypeCar
 from .validators import validate_not_empty
 
 
@@ -117,9 +117,9 @@ class ApplicationCloseForm(forms.ModelForm):
         )
 
         widgets = {
-            'brand': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'brand': forms.Select(attrs={'readonly': 'True', 'style': 'width: 100%'}),
             'reg_mark': forms.Select(attrs={'style': 'width: 100%'}),
-            'type_car': forms.Select(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'type_car': forms.Select(attrs={'disabled': 'True', 'style': 'width: 100%'}),
             'route_movement': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
             'time_delivery_car_on_base': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
             'time_delivery_car_on_borehole': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),

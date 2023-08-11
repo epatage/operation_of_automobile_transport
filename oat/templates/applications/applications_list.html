@@ -60,8 +60,9 @@
 
 {#  <div class="table ">#}
 {#    <table class="table table-light table-striped table-hover" id="formset">#}
+
     <table class="table table-applictaion " id="">
-      {{ formset.management_form }}
+  {{ formset.management_form }}
       {{ formset.non_form_errors.as_ul }}
 
       {% for form in formset.forms %}
@@ -87,14 +88,12 @@
                  {{ hidden }}
                  {% endfor %}
                  {% endif %}
-
-
                 {{ field.errors.as_ul }}
-                {{ field|addclass:'input-box' }}
+                {{ field|addclass:'input-box input-select' }}
               </td>
-{#              <td>{{ form.car.brand }}</td>#}
+{#              <td>{{ form.brand|addclass:'input-box' }}</td>#}
 {#              <td>{{ form.reg_mark|addclass:'input-box' }}</td>#}
-{#              <td>{{ form.type_car|addclass:'input-box' }}</td>#}
+{#              <td>{{ form.type_car|addclass:'input-select' }}</td>#}
             {% endfor %}
           </tr>
         </tbody>

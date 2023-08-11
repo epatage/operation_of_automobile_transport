@@ -69,3 +69,13 @@
     border: none;
     outline: none;
 }
+/*Изменение стиля отключенного выпадающего списка*/
+.input-select[disabled] {
+    color: black;
+    background: #98cee8;
+    width: 100%;
+    height: 30px;
+    border: none;
+    outline: none;
+
+}

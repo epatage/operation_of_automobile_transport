@@ -73,7 +73,7 @@ def applications_list(request, year=None, month=None, day=None):
 
         print(dt_now)
 
-    departments = Department.objects.all()
+    # departments = Department.objects.all()
 
     date = DateForm(request.GET or None, initial={'year': year, 'month': month, 'day': day})
 
@@ -88,7 +88,7 @@ def applications_list(request, year=None, month=None, day=None):
         context = {
             'applications': applications,
             'formset': formset,
-            'departments': departments,
+            # 'departments': departments,
             'year': year,
             'month': month,
             'day': day,
@@ -115,7 +115,7 @@ def applications_list(request, year=None, month=None, day=None):
         'year': year,
         'formset': formset,
         'is_edit': True,
-        'departments': departments,
+        # 'departments': departments,
         'date': date,
     }
 
