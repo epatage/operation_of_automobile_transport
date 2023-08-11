@@ -117,9 +117,9 @@ class ApplicationCloseForm(forms.ModelForm):
         )
 
         widgets = {
-            'brand': forms.Select(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'brand': forms.Select(attrs={'style': 'width: 100%'}),
             'reg_mark': forms.Select(attrs={'style': 'width: 100%'}),
-            'type_car': forms.Select(attrs={'disabled': 'True', 'style': 'width: 100%'}),
+            'type_car': forms.Select(attrs={'style': 'width: 100%'}),
             'route_movement': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
             'time_delivery_car_on_base': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
             'time_delivery_car_on_borehole': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),

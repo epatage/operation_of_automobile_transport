@@ -75,7 +75,7 @@ def applications_list(request, year=None, month=None, day=None):
 
     # departments = Department.objects.all()
 
-    date = DateForm(request.GET or None, initial={'year': year, 'month': month, 'day': day})
+    date = DateForm(request.GET or None, initial={'year': year, 'month': month, 'day': day}, prefix='date')
 
     if request.method == 'GET':
         if date.is_valid():
@@ -84,7 +84,7 @@ def applications_list(request, year=None, month=None, day=None):
             day = date.cleaned_data['day']
         applications = Application.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
 
-        formset = ApplicationCloseFormSet(queryset=applications)
+        formset = ApplicationCloseFormSet(queryset=applications, prefix='order')
         context = {
             'applications': applications,
             'formset': formset,
@@ -100,14 +100,15 @@ def applications_list(request, year=None, month=None, day=None):
     applications = Application.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
 
     if request.method == 'POST':
-        formset = ApplicationCloseFormSet(request.POST or None, queryset=applications)
+        formset = ApplicationCloseFormSet(request.POST or None, queryset=applications, prefix='order')
         if formset.is_valid():
-            # for form in formset:
-            #     form.save()
+            formset.save(commit=False)
+            for form in formset:
+                form.save()
             # formset = formset.save(commit=False)  # возврат несохраненных полей
-            formset.save()
+            # formset.save()
 
-    formset = ApplicationCloseFormSet(queryset=applications)
+    formset = ApplicationCloseFormSet(queryset=applications, prefix='order')
     context = {
         'applications': applications,
         'day': day,

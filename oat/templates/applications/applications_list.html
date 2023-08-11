@@ -58,14 +58,12 @@
   <form method="post" action="{% url 'applications:applications_list' year month day %}">
     {% csrf_token %}
 
-{#  <div class="table ">#}
-{#    <table class="table table-light table-striped table-hover" id="formset">#}
+    {{ formset.management_form }}
+    {{ formset.non_form_errors.as_ul }}
+    <table class="table table-applictaion " id="formset">
 
-    <table class="table table-applictaion " id="">
-  {{ formset.management_form }}
-      {{ formset.non_form_errors.as_ul }}
 
-      {% for form in formset.forms %}
+      {% for form in formset %}
         {% if forloop.first %}
           <thead>
             <tr>
@@ -80,7 +78,6 @@
           <tr>
             {% for field in form.visible_fields %}
               <td>
-
 {#                 Блок позволяет сохранять изменения при выборе/изменении ТС на главной странице#}
 {#                 Include the hidden fields in the form#}
                  {% if forloop.first %}
@@ -91,15 +88,12 @@
                 {{ field.errors.as_ul }}
                 {{ field|addclass:'input-box input-select' }}
               </td>
-{#              <td>{{ form.brand|addclass:'input-box' }}</td>#}
-{#              <td>{{ form.reg_mark|addclass:'input-box' }}</td>#}
-{#              <td>{{ form.type_car|addclass:'input-select' }}</td>#}
             {% endfor %}
           </tr>
         </tbody>
       {% endfor %}
     </table>
-{#  </div>#}
+
 
 
 
@@ -197,11 +191,7 @@
 </div>
 
 
-
 </div>
 </div>
-
-
-
 
 {% endblock %}
