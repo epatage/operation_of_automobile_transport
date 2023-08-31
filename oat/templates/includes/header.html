@@ -7,7 +7,7 @@
   <div class="container">
    {# <a class="navbar-brand" href="{% url 'posts:index' %}"> --- Это ссылка через картинку на главную страницу #}
     {# Переделал временно ссылку на общий список транспорта #}
-    <a class="navbar-brand" href="{% url 'applications:applications_list' current_year current_month current_day %}">
+    <a class="navbar-brand" href="{% url 'orders:orders_list' current_year current_month current_day %}">
       <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
       <span style='font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif '>
         <span style="color:#044a65"><b>ЭАТ</b></span>
@@ -27,15 +27,15 @@
 
       <li class="nav-item">
         <a class="nav-link link-dark
-          {% if view_name  == 'applications:application_add' %}active{% endif %}"
-           href="{% url 'applications:application_add' %}">Заявка
+          {% if view_name  == 'orders:order_add' %}active{% endif %}"
+           href="{% url 'orders:order_add' %}">Заявка
         </a>
       </li>
 
       <li class="nav-item">
         <a class="nav-link link-dark
-          {% if view_name  == 'applications:applications_list' %}active{% endif %}"
-           href="{% url 'applications:applications_list' current_year current_month current_day %}">Список заявок
+          {% if view_name  == 'orders:orders_list' %}active{% endif %}"
+           href="{% url 'orders:orders_list' current_year current_month current_day %}">Список заявок
         </a>
       </li>
 

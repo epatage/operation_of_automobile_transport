@@ -8,14 +8,14 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('cars', '0006_alter_car_type'),
-        ('applications', '0001_initial'),
+        ('orders', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='application',
             name='department',
-            field=models.ForeignKey(help_text='Цех/отдел', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='applications', to='applications.department', verbose_name='Цех/отдел'),
+            field=models.ForeignKey(help_text='Цех/отдел', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='orders', to='orders.department', verbose_name='Цех/отдел'),
         ),
         migrations.AddField(
             model_name='application',

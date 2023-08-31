@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('cars', '0007_auto_20230831_1455'),
-        ('applications', '0012_alter_application_time_delivery_car_on_base'),
+        ('orders', '0012_alter_application_time_delivery_car_on_base'),
     ]
 
     operations = [
@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='application',
             name='department',
-            field=models.ForeignKey(blank=True, help_text='Цех/отдел', null=True, on_delete=django.db.models.deletion.PROTECT, related_name='applications', to='applications.department', verbose_name='Цех/отдел'),
+            field=models.ForeignKey(blank=True, help_text='Цех/отдел', null=True, on_delete=django.db.models.deletion.PROTECT, related_name='orders', to='orders.department', verbose_name='Цех/отдел'),
         ),
         migrations.AlterField(
             model_name='application',

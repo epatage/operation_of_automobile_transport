@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
-from .models import Application, Department
+from .models import Order, Department
 from cars.models import TypeCar, Car
-from .forms import DateForm, ApplicationAddForm, ApplicationEditForm, ApplicationAddFormSet, ApplicationCloseForm, ApplicationCloseFormSet
+from .forms import DateForm, OrderAddForm, OrderEditForm, OrderAddFormSet, OrderCloseForm, OrderCloseFormSet
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.forms import modelformset_factory
@@ -23,29 +23,29 @@ def paginator(request, queryset):
 
 # Общий список заявок на главной странице
 @login_required
-def applications_list_(request):
-    applications = Application.objects.all()
+def orders_list_(request):
+    orders = Order.objects.all()
 
     departments = Department.objects.all()
     cars = Car.objects.all()
 
     if request.method == 'POST':
-        formset = ApplicationCloseFormSet(request.POST, queryset=applications)
+        formset = OrderCloseFormSet(request.POST, queryset=orders)
         if formset.is_valid():
             # for form in formset:
             #     form.save()
             # formset = formset.save(commit=False)  # возврат несохраненных полей
             formset.save()
 
-    formset = ApplicationCloseFormSet(queryset=applications)
+    formset = OrderCloseFormSet(queryset=orders)
     context = {
-        'applications': applications,
+        'orders': orders,
         'formset': formset,
         'is_edit': True,
         'departments': departments,
     }
 
-    return render(request, 'applications/applications_list.html', context)
+    return render(request, 'orders/orders_list.html', context)
 
 
 # Стартовая страница
@@ -54,7 +54,7 @@ def home_page(request):
     dt_now = datetime.datetime.now()
 
     return redirect(
-        'applications:applications_list',
+        'orders:orders_list',
         year=dt_now.year,
         month=dt_now.month,
         day=dt_now.day,
@@ -63,7 +63,7 @@ def home_page(request):
 
 # Общий список заявок на главной странице (по дням)
 @login_required
-def applications_list(request, year=None, month=None, day=None):
+def orders_list(request, year=None, month=None, day=None):
     # date = datetime.date(int(year), int(month), int(day))
     # show_date = date.strftime("%Y-%m-%d")
     # print(show_date, 'show_date')
@@ -82,11 +82,11 @@ def applications_list(request, year=None, month=None, day=None):
             year = date.cleaned_data['year']
             month = date.cleaned_data['month']
             day = date.cleaned_data['day']
-        applications = Application.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
+        orders = Order.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
 
-        formset = ApplicationCloseFormSet(queryset=applications, prefix='order')
+        formset = OrderCloseFormSet(queryset=orders, prefix='order')
         context = {
-            'applications': applications,
+            'orders': orders,
             'formset': formset,
             # 'departments': departments,
             'year': year,
@@ -95,12 +95,12 @@ def applications_list(request, year=None, month=None, day=None):
             'date': date,
         }
 
-        return render(request, 'applications/applications_list.html', context)
+        return render(request, 'orders/orders_list.html', context)
 
-    applications = Application.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
+    orders = Order.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
 
     if request.method == 'POST':
-        formset = ApplicationCloseFormSet(request.POST or None, queryset=applications, prefix='order')
+        formset = OrderCloseFormSet(request.POST or None, queryset=orders, prefix='order')
         if formset.is_valid():
             formset.save(commit=False)
             for form in formset:
@@ -108,9 +108,9 @@ def applications_list(request, year=None, month=None, day=None):
             # formset = formset.save(commit=False)  # возврат несохраненных полей
             # formset.save()
 
-    formset = ApplicationCloseFormSet(queryset=applications, prefix='order')
+    formset = OrderCloseFormSet(queryset=orders, prefix='order')
     context = {
-        'applications': applications,
+        'orders': orders,
         'day': day,
         'month': month,
         'year': year,
@@ -120,33 +120,33 @@ def applications_list(request, year=None, month=None, day=None):
         'date': date,
     }
 
-    return render(request, 'applications/applications_list.html', context)
+    return render(request, 'orders/orders_list.html', context)
 
 # Список заявок по цеховым подразделениям
 @login_required
-def department_applications_list(request, slug):
+def department_orders_list(request, slug):
     department = get_object_or_404(Department, slug=slug)
-    applications = department.applications.all()
+    orders = department.orders.all()
 
     departments = Department.objects.all()
 
-    formset = ApplicationCloseFormSet(queryset=applications)
+    formset = OrderCloseFormSet(queryset=orders)
 
     context = {
         # 'page_obj': page_obj,
-        'applications': applications,
+        'orders': orders,
         'departments': departments,
         'formset': formset,
     }
 
-    return render(request, 'applications/department_applications_list.html', context)
+    return render(request, 'orders/department_orders_list.html', context)
 
 
 # Добавить заявку
 @login_required
-def application_add(request):
+def order_add(request):
     if request.method == 'POST':
-        formset = ApplicationAddFormSet(request.POST or None)
+        formset = OrderAddFormSet(request.POST or None)
         if formset.is_valid():
             formset.save()
             for form in formset.deleted_objects:
@@ -156,51 +156,51 @@ def application_add(request):
             year, month, day = dt_now.year, dt_now.month, dt_now.day
 
             return redirect(
-                'applications:applications_list', year, month, day
+                'orders:orders_list', year, month, day
             )
 
-    formset = ApplicationAddFormSet(queryset=Application.objects.none())
+    formset = OrderAddFormSet(queryset=Order.objects.none())
 
     return render(
-        request, 'applications/application_add.html', {'formset': formset}
+        request, 'orders/order_add.html', {'formset': formset}
     )
 
 
-# Просмотр отдельной заявки (убрать?)
+# Просмотр отдельной заявки (сделать возможность редактирования
+# с фиксацией даты редактирования)
 @login_required
-def application_detail(request):
+def order_detail(request):
     # Зачем и чем наполнять ? Единая заявка на несколько машин ?
     # можно добавить время подачи заявки + объединенная большая заявка если была общая
     context = {
-        # 'applications': applications,
+        # 'orders': orders,
         # 'page_obj': page_obj,
     }
 
-    return render(request, 'applications/ ..... .html', context)
+    return render(request, 'orders/ ..... .html', context)
 
 
 # Редактирование заявки (заменить отменой заявки?)
 @login_required
-def application_edit(request):
-    # Зачем ?
+def order_edit(request):
 
     context = {
-        # 'applications': applications,
+        # 'orders': orders,
         # 'page_obj': page_obj,
     }
 
-    return render(request, 'applications/ ..... .html', context)
+    return render(request, 'orders/ ..... .html', context)
 
 
 # Удаление заявки (отказ)
 @login_required
-def application_delete(request):
+def order_delete(request):
     # Сделать отказ по заявке
 
     context = {
-        # 'applications': applications,
+        # 'orders': orders,
         # 'page_obj': page_obj,
     }
 
-    return render(request, 'applications/ ..... .html', context)
+    return render(request, 'orders/ ..... .html', context)
 

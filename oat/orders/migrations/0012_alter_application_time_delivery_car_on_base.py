@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('applications', '0011_alter_application_time_delivery_car_on_base'),
+        ('orders', '0011_alter_application_time_delivery_car_on_base'),
     ]
 
     operations = [

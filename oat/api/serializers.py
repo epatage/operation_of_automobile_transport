@@ -1,16 +1,15 @@
 from rest_framework import serializers
 
-from applications.models import Application
+from orders.models import Order
 
 
-class ApplicationCreateSerializer(serializers.ModelSerializer):
+class OrderCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Application
+        model = Order
         fields = (
             'id',
-            'reg_mark',
-            'brand',
+            'car',
             'type_car',
             'route_movement',
             'time_delivery_car_on_base',
@@ -22,22 +21,20 @@ class ApplicationCreateSerializer(serializers.ModelSerializer):
             'customer',
         )
         read_only_fields = (
-            'reg_mark',
-            'brand',
+            'car',
             'customer',
         )
 
 
-class ApplicationCloseSerializer(serializers.ModelSerializer):
+class OrderCloseSerializer(serializers.ModelSerializer):
     # Нужно переопределять поля для корректного отображения
     # reg_mark = serializers.SlugRelatedField(slug_field='reg_mark')
 
     class Meta:
-        model = Application
+        model = Order
         fields = (
             'id',
-            'reg_mark',
-            'brand',
+            'car',
             'type_car',
             'route_movement',
             'time_delivery_car_on_base',

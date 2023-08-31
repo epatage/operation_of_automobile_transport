@@ -1,20 +1,20 @@
 from rest_framework import viewsets
 
-from applications.models import Application
-from .serializers import ApplicationCreateSerializer, ApplicationCloseSerializer
+from orders.models import Order
+from .serializers import OrderCreateSerializer, OrderCloseSerializer
 
 
-class ApplicationCreateViewSet(viewsets.ModelViewSet):
-    queryset = Application.objects.all()
-    serializer_class = ApplicationCreateSerializer
+class OrderCreateViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderCreateSerializer
 
     def perform_create(self, serializer):
         serializer.save(customer=self.request.user)
 
     def get_serializer_class(self):
         if self.action == 'partial_update':
-            return ApplicationCloseSerializer
-        return ApplicationCreateSerializer
+            return OrderCloseSerializer
+        return OrderCreateSerializer
 
     # Делал для корректного вывода ГРЗ
     # def get_queryset(self):

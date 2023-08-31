@@ -1,14 +1,14 @@
 from django import forms
 from django.forms import inlineformset_factory, modelformset_factory
-from .models import Application
+from .models import Order
 from cars.models import Car, TypeCar
 from .validators import validate_not_empty
 
 
-class ApplicationAddForm(forms.ModelForm):
+class OrderAddForm(forms.ModelForm):
     """Форма для добавления заявки."""
     class Meta:
-        model = Application
+        model = Order
         fields = (
             'order_date',
             'type_car',
@@ -65,10 +65,10 @@ class ApplicationAddForm(forms.ModelForm):
 
 # Нужно изменить поля формы
 # не все поля можно менять, добавляется поле "время изменения заявки"
-class ApplicationEditForm(forms.ModelForm):
+class OrderEditForm(forms.ModelForm):
     """Форма для редактирования заявки."""
     class Meta:
-        model = Application
+        model = Order
         fields = {
             'car',
             'type_car',
@@ -89,9 +89,9 @@ class ApplicationEditForm(forms.ModelForm):
 
 
 """FormSet для оформления (подачи) заявки."""
-ApplicationAddFormSet = modelformset_factory(
-    Application,
-    form=ApplicationAddForm,
+OrderAddFormSet = modelformset_factory(
+    Order,
+    form=OrderAddForm,
     extra=1,
     can_delete=False,
 )
@@ -99,10 +99,10 @@ ApplicationAddFormSet = modelformset_factory(
 
 # Нужно изменить поля формы
 # не все поля можно менять, добавляется поле "время изменения заявки"
-class ApplicationCloseForm(forms.ModelForm):
+class OrderCloseForm(forms.ModelForm):
     """Форма для закрытия заявок на главной странице."""
     class Meta:
-        model = Application
+        model = Order
         fields = (
             'car',
             'type_car',
@@ -127,9 +127,9 @@ class ApplicationCloseForm(forms.ModelForm):
 
 
 """FormSet для вывода заявок на главную страницу (закрытие заявок)."""
-ApplicationCloseFormSet = modelformset_factory(
-    Application,
-    form=ApplicationCloseForm,
+OrderCloseFormSet = modelformset_factory(
+    Order,
+    form=OrderCloseForm,
     extra=0,
     can_delete=False,
 )

@@ -4,7 +4,7 @@
       <li class="nav-item">
 {#        <a#}
 {#          class="nav-link link-dark {% if applications_list %}active{% endif %}"#}
-{#          href="{% url 'applications:applications_list' %}"#}
+{#          href="{% url 'orders:applications_list' %}"#}
 {#        >#}
 {#          Все Заявки#}
 {#        </a>#}
@@ -13,7 +13,7 @@
       <li class="nav-item">
         <a
            class="nav-link link-dark {% if department_applications_list %}active{% endif %}"
-           href="{% url 'applications:department' department.slug %}"
+           href="{% url 'orders:department' department.slug %}"
         >
           {{ department.title }}
         </a>

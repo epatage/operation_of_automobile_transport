@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'api.apps.ApiConfig',
     'about.apps.AboutConfig',
-    'applications.apps.ApplicationsConfig',
+    'orders.apps.OrderConfig',
     'core.apps.CoreConfig',
     'cars.apps.CarsConfig',
 ]
@@ -140,7 +140,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'applications:home_page'
+LOGIN_REDIRECT_URL = 'orders:home_page'
 # LOGOUT_REDIRECT_URL = 'posts:index'  # нужно править !!!
 
 

@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import Application, Department
+from .models import Order, Department
 
 
-class ApplicationAdmin(admin.ModelAdmin):
+class OrderAdmin(admin.ModelAdmin):
     list_display = (
         'order_date',
         'car',
@@ -20,6 +20,6 @@ class ApplicationAdmin(admin.ModelAdmin):
     list_editable = ('car',)
 
 
-admin.site.register(Application, ApplicationAdmin)
+admin.site.register(Order, OrderAdmin)
 
 admin.site.register(Department)

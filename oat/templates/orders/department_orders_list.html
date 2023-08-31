@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-  {% include 'applications/includes/switcher.html' %}
+  {% include 'orders/includes/switcher.html' %}
   {# <h3> Список Заявок: {{ cars_count }} ед. </h3> #}
 
   <div class="container">
@@ -25,17 +25,17 @@
         </tr>
       </thead>
       <tbody>
-        {% for application in formset %}  {# нужно все переделывать под заявки #}
+        {% for order in formset %}  {# нужно все переделывать под заявки #}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ application.brand }}</td>
-            <td>{{ application.reg_mark }}</td>
-            <td>{{ application.type_car }}</td>
-            <td>{{ application.route_movement }}</td>
-            <td>{{ application.time_delivery_car_on_base }}</td>
-            <td>{{ application.time_delivery_car_on_borehole }}</td>
-            <td>{{ application.quantity_hours }}</td>
-            <td>{{ application.note }}</td>
+            <td>{{ order.brand }}</td>
+            <td>{{ order.reg_mark }}</td>
+            <td>{{ order.type_car }}</td>
+            <td>{{ order.route_movement }}</td>
+            <td>{{ order.time_delivery_car_on_base }}</td>
+            <td>{{ order.time_delivery_car_on_borehole }}</td>
+            <td>{{ order.quantity_hours }}</td>
+            <td>{{ order.note }}</td>
           </tr>
 
 

@@ -7,12 +7,12 @@
 {% endblock %}
 
 {% block content %}
-   {% include 'applications/includes/switcher.html' %}
+   {% include 'orders/includes/switcher.html' %}
 {#   <h3> Список Заявок: {{ cars_count }} ед. </h3>#}
-{#  переключатлеь по дням месяца. Возможно, не нужен.  {% include 'applications/includes/switcher_date.html' %}#}
+{#  переключатлеь по дням месяца. Возможно, не нужен.  {% include 'orders/includes/switcher_date.html' %}#}
 
       <div>
-        <form action="{% url 'applications:applications_list' year month day %}" method="get" >
+        <form action="{% url 'orders:orders_list' year month day %}" method="get" >
           {{ date.management_form }}
           <div class="form-group">
             <div class="container-fluid text-center overflow-hidden">
@@ -55,7 +55,7 @@
 
 <div class="container card-body">
 
-  <form method="post" action="{% url 'applications:applications_list' year month day %}">
+  <form method="post" action="{% url 'orders:orders_list' year month day %}">
     {% csrf_token %}
 
     {{ formset.management_form }}

@@ -6,7 +6,7 @@
         {% for day in days %}
         <li class="nav-item" style="width: 40px">
           <a class="nav-link {% if department_applications_list %}active{% endif %}" aria-current="true"
-             href="{% url 'applications:applications_list_day' year months day %}">
+             href="{% url 'orders:applications_list_day' year months day %}">
             {{ day }}
           </a>
         </li>

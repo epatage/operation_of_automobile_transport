@@ -9,18 +9,18 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('applications', '0007_alter_application_customer'),
+        ('orders', '0007_alter_application_customer'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='application',
             name='customer',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='applications', to=settings.AUTH_USER_MODEL, verbose_name='Заказчик'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='orders', to=settings.AUTH_USER_MODEL, verbose_name='Заказчик'),
         ),
         migrations.AlterField(
             model_name='application',
             name='department',
-            field=models.ForeignKey(blank=True, help_text='Цех/отдел', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='applications', to='applications.department', verbose_name='Цех/отдел'),
+            field=models.ForeignKey(blank=True, help_text='Цех/отдел', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='orders', to='orders.department', verbose_name='Цех/отдел'),
         ),
     ]

@@ -6,7 +6,7 @@ from cars.models import TypeCar, Car
 User = get_user_model()
 
 
-class Application(models.Model):
+class Order(models.Model):
     """Заявка связывает тип ТС, ТС, департамент, которые не могут быть удалены
     при наличии связи. Обязательные поля всегда должны оставаться заполненными.
     Каскадное удаление связанных моделей недопустимо.
@@ -16,7 +16,7 @@ class Application(models.Model):
         blank=True,
         null=True,
         on_delete=models.PROTECT,
-        related_name='cars',
+        related_name='orders',
         verbose_name='ТС',
         help_text='Транспортное средство',
     )
@@ -25,7 +25,7 @@ class Application(models.Model):
         blank=False,
         null=False,
         on_delete=models.PROTECT,
-        related_name='types',
+        related_name='orders',
         verbose_name='Тип ТС',
         help_text='Тип транспортного средства',
     )
@@ -66,7 +66,7 @@ class Application(models.Model):
         blank=True,  # Менять на False
         null=True,
         on_delete=models.PROTECT,
-        related_name='applications',
+        related_name='orders',
         verbose_name='Цех/отдел',
         help_text='Цех/отдел',
     )
@@ -90,7 +90,7 @@ class Application(models.Model):
     """
     customer = models.ForeignKey(
         User,
-        related_name='applications',
+        related_name='orders',
         on_delete=models.PROTECT,
         null=True,
         blank=True,  # Менять на False
