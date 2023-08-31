@@ -2,6 +2,10 @@ from django.db import models
 
 
 class Car(models.Model):
+    """Удаление ТС при наличии связи с заявкой невозможно!
+    ТС может редактироваться. ТС может быть активировано/деактивировано
+    для перевода из/в архивное состояние.
+    """
     brand = models.CharField(max_length=50)
     reg_mark = models.CharField(max_length=10)
     type = models.ForeignKey(
@@ -42,6 +46,10 @@ class Column(models.Model):
 
 
 class TypeCar(models.Model):
+    """Удаление типа ТС при наличии связи с заявкой невозможно!
+    Тип ТС может редактироваться. Тип ТС может быть активирован/деактивирован
+    для перевода из/в архивное состояние.
+    """
     title = models.CharField(max_length=20)
     slug = models.SlugField('slug', unique=True)
     active = models.BooleanField(

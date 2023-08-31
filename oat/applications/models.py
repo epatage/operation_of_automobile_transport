@@ -7,6 +7,10 @@ User = get_user_model()
 
 
 class Application(models.Model):
+    """Заявка связывает тип ТС, ТС, департамент, которые не могут быть удалены
+    при наличии связи. Обязательные поля всегда должны оставаться заполненными.
+    Каскадное удаление связанных моделей недопустимо.
+    """
     car = models.ForeignKey(
         Car,
         blank=True,
@@ -59,7 +63,7 @@ class Application(models.Model):
     )
     department = models.ForeignKey(
         'Department',
-        blank=True,     # Менять на False
+        blank=True,  # Менять на False
         null=True,
         on_delete=models.PROTECT,
         related_name='applications',
@@ -87,9 +91,9 @@ class Application(models.Model):
     customer = models.ForeignKey(
         User,
         related_name='applications',
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         null=True,
-        blank=True,     # Менять на False
+        blank=True,  # Менять на False
         verbose_name='Заказчик',
     )
 
@@ -101,6 +105,10 @@ class Application(models.Model):
 
 
 class Department(models.Model):
+    """Удаление департамента при наличии связи с заявкой невозможно!
+    Департамент может редактироваться. Департамент может быть
+    активирован/деактивирован для перевода из/в архивное состояние.
+    """
     title = models.CharField(
         max_length=30,
         verbose_name='Подразделение',
