@@ -7,29 +7,20 @@ User = get_user_model()
 
 
 class Application(models.Model):
-    reg_mark = models.ForeignKey(
+    car = models.ForeignKey(
         Car,
         blank=True,
         null=True,
-        on_delete=models.CASCADE,
-        related_name='cars_mark',
-        verbose_name='ГРЗ',
-        help_text='Гос.рег.знак',
-    )
-    brand = models.ForeignKey(
-        Car,
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-        related_name='cars_brand',
-        verbose_name='Марка ТС',
-        help_text='Марка транспортного средства',
+        on_delete=models.PROTECT,
+        related_name='cars',
+        verbose_name='ТС',
+        help_text='Транспортное средство',
     )
     type_car = models.ForeignKey(
         TypeCar,
         blank=False,
         null=False,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name='types',
         verbose_name='Тип ТС',
         help_text='Тип транспортного средства',
@@ -70,7 +61,7 @@ class Application(models.Model):
         'Department',
         blank=True,     # Менять на False
         null=True,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name='applications',
         verbose_name='Цех/отдел',
         help_text='Цех/отдел',
@@ -119,6 +110,9 @@ class Department(models.Model):
         'slug',
         unique=True,
         null=True,
+    )
+    active = models.BooleanField(
+        default=True,
     )
 
     def __str__(self):

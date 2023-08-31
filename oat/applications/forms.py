@@ -70,8 +70,7 @@ class ApplicationEditForm(forms.ModelForm):
     class Meta:
         model = Application
         fields = {
-            'reg_mark',
-            'brand',
+            'car',
             'type_car',
             'route_movement',
             'time_delivery_car_on_base',
@@ -105,8 +104,7 @@ class ApplicationCloseForm(forms.ModelForm):
     class Meta:
         model = Application
         fields = (
-            'brand',
-            'reg_mark',
+            'car',
             'type_car',
             'route_movement',
             'time_delivery_car_on_base',
@@ -117,8 +115,7 @@ class ApplicationCloseForm(forms.ModelForm):
         )
 
         widgets = {
-            'brand': forms.Select(attrs={'style': 'width: 100%'}),
-            'reg_mark': forms.Select(attrs={'style': 'width: 100%'}),
+            'car': forms.Select(attrs={'style': 'width: 100%'}),
             'type_car': forms.Select(attrs={'style': 'width: 100%'}),
             'route_movement': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
             'time_delivery_car_on_base': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),

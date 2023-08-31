@@ -6,8 +6,7 @@ from .models import Application, Department
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = (
         'order_date',
-        'brand',
-        'reg_mark',
+        'car',
         'type_car',
         'route_movement',
         'time_delivery_car_on_base',
@@ -18,7 +17,7 @@ class ApplicationAdmin(admin.ModelAdmin):
     search_fields = ('order_date', 'route_movement', 'note')
     list_filter = ('route_movement',)
     empty_value_display = '-пусто-'
-    list_editable = ('reg_mark',)
+    list_editable = ('car',)
 
 
 admin.site.register(Application, ApplicationAdmin)
