@@ -1,9 +1,7 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 
 from cars.models import TypeCar, Car
-
-User = get_user_model()
+from users.models import User, Department
 
 
 class Order(models.Model):
@@ -62,13 +60,13 @@ class Order(models.Model):
         blank=True,
     )
     department = models.ForeignKey(
-        'Department',
+        Department,
         blank=True,  # Менять на False
         null=True,
         on_delete=models.PROTECT,
         related_name='orders',
-        verbose_name='Цех/отдел',
-        help_text='Цех/отдел',
+        verbose_name='Цех/отдел/департамент',
+        help_text='Цех/отдел/департамент',
     )
     pub_date = models.DateTimeField(
         'Дата подачи заявки',
@@ -104,24 +102,4 @@ class Order(models.Model):
         return f'{self.route_movement} {self.type_car}'
 
 
-class Department(models.Model):
-    """Удаление департамента при наличии связи с заявкой невозможно!
-    Департамент может редактироваться. Департамент может быть
-    активирован/деактивирован для перевода из/в архивное состояние.
-    """
-    title = models.CharField(
-        max_length=30,
-        verbose_name='Подразделение',
-        help_text='Цех/отдел',
-    )
-    slug = models.SlugField(
-        'slug',
-        unique=True,
-        null=True,
-    )
-    active = models.BooleanField(
-        default=True,
-    )
 
-    def __str__(self):
-        return self.title
