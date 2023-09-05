@@ -61,15 +61,15 @@ class Order(models.Model):
     )
     department = models.ForeignKey(
         Department,
-        blank=True,  # Менять на False
-        null=True,
+        blank=False,
+        null=False,
         on_delete=models.PROTECT,
         related_name='orders',
         verbose_name='Цех/отдел/департамент',
         help_text='Цех/отдел/департамент',
     )
     pub_date = models.DateTimeField(
-        'Дата подачи заявки',
+        'Дата и время подачи заявки',
         auto_now_add=True,
         null=True,
         blank=False,
@@ -90,8 +90,8 @@ class Order(models.Model):
         User,
         related_name='orders',
         on_delete=models.PROTECT,
-        null=True,
-        blank=True,  # Менять на False
+        null=False,
+        blank=False,
         verbose_name='Заказчик',
     )
 

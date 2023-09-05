@@ -17,7 +17,7 @@ class OrderAddForm(forms.ModelForm):
             'time_delivery_car_on_borehole',
             'quantity_hours',
             'note',
-            'department',  # впоследствии нужно убрать !!! (меняется на request.customer)
+            #'department',  # впоследствии нужно убрать !!! (меняется на request.customer)
         )
         widgets = {
             'order_date': forms.TextInput(attrs={
@@ -55,11 +55,11 @@ class OrderAddForm(forms.ModelForm):
                 'style': 'width: 200px',
                 'placeholder': 'Примечание',
             }),
-            'department': forms.Select(attrs={
-                'class': 'form-control-sm',
-                'style': 'width: 120px',
-                'placeholder': 'Цех/отдел',
-            }),
+            # 'department': forms.Select(attrs={
+            #     'class': 'form-control-sm',
+            #     'style': 'width: 120px',
+            #     'placeholder': 'Цех/отдел',
+            # }),
         }
 
 
@@ -133,6 +133,7 @@ OrderCloseFormSet = modelformset_factory(
     extra=0,
     can_delete=False,
 )
+
 
 class DateForm(forms.Form):
     """Форма опредения даты."""

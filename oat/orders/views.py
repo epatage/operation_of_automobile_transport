@@ -148,7 +148,12 @@ def order_add(request):
     if request.method == 'POST':
         formset = OrderAddFormSet(request.POST or None)
         if formset.is_valid():
-            formset.save()
+            orders = formset.save(commit=False)
+            for order in orders:
+                order.customer = request.user
+                order.department = request.user.department
+                order.save()
+
             for form in formset.deleted_objects:
                 form.delete()
 

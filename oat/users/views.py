@@ -6,13 +6,15 @@ from .models import User
 
 
 class SignUp(CreateView):
+    """Авторизация пользователя."""
     form_class = CreationForm
     success_url = reverse_lazy('cars:cars_list')
     template_name = 'users/signup.html'
 
 
-# Информация по пользователю
+# Добавить информацию о пользователе
 def profile(request, username):
+    """Профайл пользователя."""
     user = get_object_or_404(User, username=username)
     # user_info = user.info.get(user.id)
 

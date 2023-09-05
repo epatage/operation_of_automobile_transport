@@ -11,7 +11,7 @@ class Department(models.Model):
     title = models.CharField(
         max_length=30,
         verbose_name='Подразделение',
-        help_text='Цех/отдел',
+        help_text='Цех/отдел/департамент',
     )
     slug = models.SlugField(
         'slug',
@@ -30,9 +30,13 @@ class User(AbstractUser):
     """Кастомная модель пользователя."""
     patronymic = models.CharField(
         max_length=50,
+        verbose_name='Отчество',
+        help_text='Отчество',
     )
     position = models.CharField(
         max_length=250,
+        verbose_name='Должность',
+        help_text='Должность',
     )
     department = models.ForeignKey(
         'Department',
@@ -40,7 +44,7 @@ class User(AbstractUser):
         null=True,
         on_delete=models.PROTECT,
         related_name='users',
-        verbose_name='Цех/отдел/департамент',
+        verbose_name='Подразделение',
         help_text='Цех/отдел/департамент',
     )
 
