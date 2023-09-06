@@ -14,6 +14,7 @@ from . import views
 app_name = 'users'
 
 urlpatterns = [
+    path('users-list', views.users_list, name='users_list'),
     path('profile/<str:username>/', views.profile, name='profile'),
     path(
         'logout/',

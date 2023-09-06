@@ -21,9 +21,9 @@ def paginator(request, queryset):
     return {'page_obj': page_obj}
 
 
-# Общий список заявок на главной странице
 @login_required
 def orders_list_(request):
+    """Общий список заявок на главной странице"""
     orders = Order.objects.all()
 
     departments = Department.objects.all()
@@ -48,9 +48,9 @@ def orders_list_(request):
     return render(request, 'orders/orders_list.html', context)
 
 
-# Стартовая страница
 @login_required
 def home_page(request):
+    """Стартовая страница."""
     dt_now = datetime.datetime.now()
 
     return redirect(
@@ -61,17 +61,12 @@ def home_page(request):
     )
 
 
-# Общий список заявок на главной странице (по дням)
 @login_required
 def orders_list(request, year=None, month=None, day=None):
-    # date = datetime.date(int(year), int(month), int(day))
-    # show_date = date.strftime("%Y-%m-%d")
-    # print(show_date, 'show_date')
-    print('<------------')
+    """Общий список заявок на главной странице (по дням)."""
+
     if not year or not month or not day:
         dt_now = datetime.datetime.now()
-
-        print(dt_now)
 
     # departments = Department.objects.all()
 
@@ -105,8 +100,6 @@ def orders_list(request, year=None, month=None, day=None):
             formset.save(commit=False)
             for form in formset:
                 form.save()
-            # formset = formset.save(commit=False)  # возврат несохраненных полей
-            # formset.save()
 
     formset = OrderCloseFormSet(queryset=orders, prefix='order')
     context = {
@@ -122,9 +115,10 @@ def orders_list(request, year=None, month=None, day=None):
 
     return render(request, 'orders/orders_list.html', context)
 
-# Список заявок по цеховым подразделениям
+
 @login_required
 def department_orders_list(request, slug):
+    """Список заявок по цеховым подразделениям."""
     department = get_object_or_404(Department, slug=slug)
     orders = department.orders.all()
 
@@ -142,9 +136,9 @@ def department_orders_list(request, slug):
     return render(request, 'orders/department_orders_list.html', context)
 
 
-# Добавить заявку
 @login_required
 def order_add(request):
+    """Добавить заявку."""
     if request.method == 'POST':
         formset = OrderAddFormSet(request.POST or None)
         if formset.is_valid():

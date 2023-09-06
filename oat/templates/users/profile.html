@@ -2,40 +2,36 @@
 {% load static %}
 
 {% block title %}
-    Профайл пользователя {{ author.get_full_name }}
+    Профайл пользователя {{ user.get_full_name }}
 {% endblock %}
 
 {% block content %}
 
   <div class="container py-5">
-    <h1>Все посты пользователя {{ author.get_full_name }} </h1>
-    <h3>Всего постов: {{ post_list_user.count }}</h3>
 
-    {% for post in page_obj %}
       <article>
         <ul>
           <li>
-            Автор: {{ author.get_full_name }}
-            <a href="{% url 'posts:profile' author.username %}">все посты пользователя</a>
+            <b>Фамилия:</b> {{ user.last_name }}
+          </li>
+          <li>
+            <b>Имя:</b> {{ user.first_name }}
+          </li>
+          <li>
+            <b>Отчество:</b> {{ user.patronypic }}
+          </li>
+          <li>
+            <b>Должность:</b> {{ user.position }}
+          </li>
+          <li>
+            <b>Подразделение:</b> {{ user.department }}
+          </li>
+          <li>
+            <b>email:</b> {{ user.email }}
           </li>
         </ul>
-          <ul>
-            <li>
-              Дата публикации: {{ post.pub_date|date:"d E Y" }}
-            </li>
-          </ul>
-          <p>{{ post.text }}</p>
-        <a href="{% url 'posts:post_detail' post.id  %}">подробная информация </a>
       </article>
 
-      {% if post.group %}
-        <a href="{% url 'posts:group_list' post.group.slug  %}">все записи группы {{ post.group }}</a>
-      {% endif %}
-
-
-      {% if not forloop.last %}<hr>{% endif %}
-     {% endfor %}
-      {% include 'posts/includes/paginator.html' %}
   </div>
 
 {% endblock %}

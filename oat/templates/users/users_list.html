@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <h1>Список пользователей</h1>
+{% endblock %}
+
+{% block content %}
+
+  <div class="container py-5">
+    <h3>Всего пользователей: {{ users.count }}</h3>
+
+    {% for user in users %}
+      <article>
+        <ul>
+          <li>
+            Пользователь: <a href="{% url 'users:profile' user.username %}">{{ user.get_full_name }}</a>
+          </li>
+        </ul>
+          <ul>
+            <li>
+              Подразделение: {{ user.department }}
+            </li>
+          </ul>
+      </article>
+
+      {% if not forloop.last %}<hr>{% endif %}
+     {% endfor %}
+{#      {% include 'posts/includes/paginator.html' %}    настроить пагинацию пользователей !!! #}
+  </div>
+
+{% endblock %}

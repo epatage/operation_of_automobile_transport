@@ -48,6 +48,13 @@
 
       <li class="nav-item">
         <a class="nav-link link-dark
+          {% if view_name  == 'users:users_list' %}active{% endif %}"
+           href="{% url 'users:users_list' %}">Пользователи
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link link-dark
           {% if view_name  == 'about:info' %}active{% endif %}"
            href="{% url 'about:info' %}">Информация
         </a>
