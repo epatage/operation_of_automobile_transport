@@ -8,6 +8,7 @@ class Department(models.Model):
     Департамент может редактироваться. Департамент может быть
     активирован/деактивирован для перевода из/в архивное состояние.
     """
+
     title = models.CharField(
         max_length=30,
         verbose_name='Подразделение',
@@ -28,6 +29,20 @@ class Department(models.Model):
 
 class User(AbstractUser):
     """Кастомная модель пользователя."""
+
+    username = models.CharField(
+        "Username",
+        max_length=150,
+        unique=True,
+        null=True,
+        blank=True,
+        validators=[
+            RegexValidator(
+                regex=r"^[\w.@+-]+\Z",
+                message="Имя пользователя содержит недопустимый символ",
+            )
+        ],
+    )
     patronymic = models.CharField(
         max_length=50,
         verbose_name='Отчество',
@@ -42,11 +57,11 @@ class User(AbstractUser):
         'Department',
         blank=False,
         null=True,
-        on_delete=models.PROTECT,
+        on_delete=models.SET_NULL,
         related_name='users',
         verbose_name='Подразделение',
         help_text='Цех/отдел/департамент',
     )
 
     def __str__(self):
-        return self.username
+        return self.last_name or ''

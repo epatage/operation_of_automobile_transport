@@ -18,7 +18,6 @@ class OrderAdmin(admin.ModelAdmin):
         'department',
         'pub_date',
     )
-    search_fields = ('order_date', 'route_movement', 'note')
-    list_filter = ('route_movement',)
-    empty_value_display = '-пусто-'
+    search_fields = ('order_date', 'route_movement')
+    list_filter = ('order_date',)
     list_editable = ('car',)

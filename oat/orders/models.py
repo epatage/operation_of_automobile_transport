@@ -80,12 +80,6 @@ class Order(models.Model):
         blank=False,
         help_text='Укажите дату на которую заявляется транспорт',
     )
-
-    """
-    Заказчика нужно вынести в отдельную модель с ФИО, должностью, отделом.
-    В раздел отдела будет передаваться информация с пользователя подающего
-    заявку. Сделать связь многие-ко-многим.
-    """
     customer = models.ForeignKey(
         User,
         related_name='orders',
@@ -100,6 +94,3 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.route_movement} {self.type_car}'
-
-
-
