@@ -4,11 +4,11 @@ from .models import Car, Column, TypeCar
 
 
 class CarAdmin(admin.ModelAdmin):
-    list_display = ('brand', 'type', 'reg_mark', 'column')
-    search_fields = ('brand', 'type', 'reg_mark')
-    list_filter = ('type',)
-    empty_value_display = '-пусто-'
-    list_editable = ('column', 'type')
+    list_display = ('brand', 'type_car', 'reg_mark', 'column', 'active')
+    search_fields = ('brand', 'type_car', 'reg_mark')
+    list_filter = ('type_car', 'column')
+    empty_value_display = '- не назначено -'
+    list_editable = ('column', 'type_car', 'active')
 
 
 admin.site.register(Car, CarAdmin)
