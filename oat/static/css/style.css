@@ -79,3 +79,65 @@
     outline: none;
 
 }
+
+
+/* Необходимы правки таблицы вывода ТС !!! */
+.table-car {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1em;
+    min-width: 400px;
+    /*Закругления таблицы сверху*/
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    border: 1px;
+    font-family: "Bitstream Vera Sans", Verdana, sans-serif;
+}
+/*Ширина столбцов таблицы*/
+.table-car td:nth-child(1) {
+    width: 10%;
+}
+.table-car td:nth-child(2) {
+    width: 20%;
+}
+.table-car td:nth-child(3) {
+    width: 20%;
+}
+.table-car td:nth-child(4) {
+    width: 20%;
+}
+.table-car td:nth-child(5) {
+    width: 15%;
+}
+/*.table-car td:nth-child(6) {*/
+/*    width: 10%;*/
+/*}*/
+/*.table-car td:nth-child(7) {*/
+/*    width: 10%;*/
+/*}*/
+/*.table-car td:nth-child(8) {*/
+/*    width: 20%;*/
+/*}*/
+
+.table-car thead tr {
+    background-color: #5d97b6;
+    color: #dbecff;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+}
+.table-car th,
+.table-car td {
+    padding: 4px 2px;
+    text-align: center;
+}
+/*Полоска между табличными строками*/
+.table-car tbody tr {
+    border-bottom: 1px solid #c7def5;
+}
+/*Черезстрочное оттенение*/
+.table-car tbody tr:nth-of-type(even) {
+    background-color: #aed0e0;
+}

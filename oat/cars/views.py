@@ -2,7 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Car, Column
 from .forms import CarAddForm, CarEditForm
-import pandas as pd
 
 
 @login_required
@@ -11,12 +10,10 @@ def cars_list(request):
 
     cars = Car.activated.select_related('type_car', 'column').all()
     cars_count = cars.count()
-    df = pd.DataFrame(cars)
 
     context = {
         'cars': cars,
         'cars_count': cars_count,
-        'df': df.to_html(),
     }
 
     return render(request, 'cars/cars_list.html', context)

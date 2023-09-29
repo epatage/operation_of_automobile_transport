@@ -10,7 +10,7 @@
   <hr>
   <div class="container">
 
-    <table class="table table-light table-striped">
+    <table class="table-car">
       <thead>
         <tr>
           <th>Марка ТС</th>
@@ -26,7 +26,7 @@
         <tr>
           <td>{{car.brand}}</td>
           <td><a href="{% url "cars:car_detail" car.id %}">{{ car.reg_mark }}</a></td>
-          <td>{{car.type}}</td>
+          <td>{{car.type_car}}</td>
           <td>
             {% if car.column %}
               <a href="{% url 'cars:column' car.column.slug %}">{{ car.column }}</a>
