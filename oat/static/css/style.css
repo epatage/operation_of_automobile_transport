@@ -1,5 +1,5 @@
 
-.table-applictaion {
+.table-order {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
@@ -13,52 +13,52 @@
     font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
 }
 /*Ширина столбцов таблицы*/
-.table-applictaion td:nth-child(1) {
+.table-order td:nth-child(1) {
     width: 10%;
 }
-.table-applictaion td:nth-child(2) {
+.table-order td:nth-child(2) {
     width: 10%;
 }
-.table-applictaion td:nth-child(3) {
+.table-order td:nth-child(3) {
     width: 10%;
 }
-.table-applictaion td:nth-child(4) {
+.table-order td:nth-child(4) {
     width: 20%;
 }
-.table-applictaion td:nth-child(5) {
+.table-order td:nth-child(5) {
     width: 10%;
 }
-.table-applictaion td:nth-child(6) {
+.table-order td:nth-child(6) {
     width: 10%;
 }
-.table-applictaion td:nth-child(7) {
+.table-order td:nth-child(7) {
     width: 10%;
 }
-.table-applictaion td:nth-child(8) {
+.table-order td:nth-child(8) {
     width: 20%;
 }
 
-.table-applictaion thead tr {
+.table-order thead tr {
     background-color: #87b8d2;
     color: #ffffff;
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
 }
-.table-applictaion th,
-.table-applictaion td {
+.table-order th,
+.table-order td {
     padding: 4px 2px;
 }
 /*Полоска между табличными строками*/
-.table-applictaion tbody tr {
+.table-order tbody tr {
     border-bottom: 1px solid #f9fafb;
 }
 /*Черезстрочное оттенение*/
-.table-applictaion tbody tr:nth-of-type(even) {
+.table-order tbody tr:nth-of-type(even) {
     background-color: #ffcd39;
 }
 /*Нижняя полоса таблицы*/
-/*.table-applictaion tbody tr:last-of-type {*/
+/*.table-order tbody tr:last-of-type {*/
 /*    border-bottom: 2px solid #ea868f;*/
 /*}*/
 
