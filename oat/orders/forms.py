@@ -2,11 +2,12 @@ from django import forms
 from django.forms import inlineformset_factory, modelformset_factory
 from .models import Order
 from cars.models import Car, TypeCar
-from .validators import validate_not_empty
+from .validators import validate_day, validate_year, validate_month
 
 
 class OrderAddForm(forms.ModelForm):
     """Форма для добавления заявки."""
+
     class Meta:
         model = Order
         fields = (
@@ -67,6 +68,7 @@ class OrderAddForm(forms.ModelForm):
 # не все поля можно менять, добавляется поле "время изменения заявки"
 class OrderEditForm(forms.ModelForm):
     """Форма для редактирования заявки."""
+
     class Meta:
         model = Order
         fields = {
@@ -101,6 +103,7 @@ OrderAddFormSet = modelformset_factory(
 # не все поля можно менять, добавляется поле "время изменения заявки"
 class OrderCloseForm(forms.ModelForm):
     """Форма для закрытия заявок на главной странице."""
+
     class Meta:
         model = Order
         fields = (
@@ -136,25 +139,29 @@ OrderCloseFormSet = modelformset_factory(
 
 
 class DateForm(forms.Form):
-    """Форма опредения даты."""
+    """Форма определения даты"""
+
     year = forms.IntegerField(
         label='Год',
         widget=forms.TextInput(attrs={
                 'class': 'form-control-sm',
                 'style': 'width: 200px',
-        }), validators=[validate_not_empty]
+        }),
+        validators=[validate_year]
     )
     month = forms.IntegerField(
         label='Месяц',
         widget=forms.TextInput(attrs={
             'class': 'form-control-sm',
             'style': 'width: 200px',
-        }), validators=[validate_not_empty]
+        }),
+        validators=[validate_month]
     )
     day = forms.IntegerField(
         label='День',
         widget=forms.TextInput(attrs={
             'class': 'form-control-sm',
             'style': 'width: 200px',
-        }), validators=[validate_not_empty]
+        }),
+        validators=[validate_day]
     )

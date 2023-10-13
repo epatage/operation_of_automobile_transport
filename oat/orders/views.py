@@ -10,8 +10,10 @@ from django.forms import modelformset_factory
 import datetime
 import time
 from time import gmtime, strftime
+from .db_query import query_debugger
 
 
+# УДАЛИТЬ !
 def paginator(request, queryset):
     """Функция разделения (пагинации) заявок по датам."""
     paginator = Paginator(queryset, 10)
@@ -21,6 +23,7 @@ def paginator(request, queryset):
     return {'page_obj': page_obj}
 
 
+# УДАЛИТЬ !
 @login_required
 def orders_list_(request):
     """Общий список заявок на главной странице"""
@@ -48,6 +51,7 @@ def orders_list_(request):
     return render(request, 'orders/orders_list.html', context)
 
 
+# УДАЛИТЬ !
 @login_required
 def home_page(request):
     """Стартовая страница."""
@@ -61,36 +65,37 @@ def home_page(request):
     )
 
 
+def get_date():
+    """Получение даты для формы даты в Заявке"""
+
+    dt_now = datetime.datetime.now()
+    year = dt_now.year
+    month = dt_now.month
+    day = dt_now.day
+
+    return year, month, day
+
+
+@query_debugger
 @login_required
 def orders_list(request, year=None, month=None, day=None):
-    """Общий список заявок на главной странице (по дням)."""
+    """Общий список заявок на главной странице по дням."""
 
+    # В случае отсутствия данных в форме будет открывать текущий день
     if not year or not month or not day:
-        dt_now = datetime.datetime.now()
+        year, month, day = get_date()
 
     # departments = Department.objects.all()
 
     date = DateForm(request.GET or None, initial={'year': year, 'month': month, 'day': day}, prefix='date')
 
-    if request.method == 'GET':
-        if date.is_valid():
-            year = date.cleaned_data['year']
-            month = date.cleaned_data['month']
-            day = date.cleaned_data['day']
-        orders = Order.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
-
-        formset = OrderCloseFormSet(queryset=orders, prefix='order')
-        context = {
-            'orders': orders,
-            'formset': formset,
-            # 'departments': departments,
-            'year': year,
-            'month': month,
-            'day': day,
-            'date': date,
-        }
-
-        return render(request, 'orders/orders_list.html', context)
+    if date.is_valid():
+        year = date.cleaned_data['year']
+        month = date.cleaned_data['month']
+        day = date.cleaned_data['day']
+    else:
+        # Если данные некорректны будет открывать текущий день
+        year, month, day = get_date()
 
     orders = Order.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
 
@@ -104,12 +109,11 @@ def orders_list(request, year=None, month=None, day=None):
     formset = OrderCloseFormSet(queryset=orders, prefix='order')
     context = {
         'orders': orders,
-        'day': day,
-        'month': month,
-        'year': year,
         'formset': formset,
-        'is_edit': True,
         # 'departments': departments,
+        'year': year,
+        'month': month,
+        'day': day,
         'date': date,
     }
 
@@ -119,6 +123,7 @@ def orders_list(request, year=None, month=None, day=None):
 @login_required
 def department_orders_list(request, slug):
     """Список заявок по цеховым подразделениям."""
+
     department = get_object_or_404(Department, slug=slug)
     orders = department.orders.all()
 
@@ -139,6 +144,7 @@ def department_orders_list(request, slug):
 @login_required
 def order_add(request):
     """Добавить заявку."""
+
     if request.method == 'POST':
         formset = OrderAddFormSet(request.POST or None)
         if formset.is_valid():
@@ -182,7 +188,6 @@ def order_detail(request):
 # Редактирование заявки (заменить отменой заявки?)
 @login_required
 def order_edit(request):
-
     context = {
         # 'orders': orders,
         # 'page_obj': page_obj,
@@ -202,4 +207,3 @@ def order_delete(request):
     }
 
     return render(request, 'orders/ ..... .html', context)
-

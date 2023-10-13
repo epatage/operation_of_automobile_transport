@@ -9,6 +9,7 @@ class Order(models.Model):
     при наличии связи. Обязательные поля всегда должны оставаться заполненными.
     Каскадное удаление связанных моделей недопустимо.
     """
+
     car = models.ForeignKey(
         Car,
         blank=True,
@@ -79,6 +80,7 @@ class Order(models.Model):
         null=True,
         blank=False,
         help_text='Укажите дату на которую заявляется транспорт',
+        db_index=True,
     )
     customer = models.ForeignKey(
         User,
