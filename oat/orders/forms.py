@@ -114,7 +114,7 @@ class OrderCloseForm(forms.ModelForm):
             'time_delivery_car_on_borehole',
             'quantity_hours',
             'note',
-            # 'department',
+            'department',
         )
 
         widgets = {
@@ -125,7 +125,7 @@ class OrderCloseForm(forms.ModelForm):
             'time_delivery_car_on_borehole': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
             'quantity_hours': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
             'note': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
-            'department': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'department': forms.Select(attrs={'style': 'width: 100%'}),
         }
 
 

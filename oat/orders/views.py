@@ -10,7 +10,6 @@ from django.forms import modelformset_factory
 import datetime
 import time
 from time import gmtime, strftime
-from .db_query import query_debugger
 
 
 # УДАЛИТЬ !
@@ -76,7 +75,6 @@ def get_date():
     return year, month, day
 
 
-@query_debugger
 @login_required
 def orders_list(request, year=None, month=None, day=None):
     """Общий список заявок на главной странице по дням."""
