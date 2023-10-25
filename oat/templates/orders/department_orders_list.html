@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        {% for order in formset %}  {# нужно все переделывать под заявки #}
+        {% for order in page_obj %}  {# нужно все переделывать под заявки #}
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ order.brand }}</td>
@@ -38,11 +38,10 @@
             <td>{{ order.note }}</td>
           </tr>
 
-
-
         {% endfor %}
       </tbody>
     </table>
-  </div>
 
+  {% include 'orders/includes/paginator.html' %}
+  </div>
 {% endblock %}

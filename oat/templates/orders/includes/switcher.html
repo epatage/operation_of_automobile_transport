@@ -13,7 +13,7 @@
       <li class="nav-item">
         <a
            class="nav-link link-dark {% if department_applications_list %}active{% endif %}"
-           href="{% url 'orders:department' department.slug %}"
+           href="{% url 'orders:department_orders_list' department.slug %}"
         >
           {{ department.title }}
         </a>

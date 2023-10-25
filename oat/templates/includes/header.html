@@ -63,15 +63,6 @@
 
       {% if user.is_authenticated %}
 
-        {% comment %}
-      <li class="nav-item">
-        <a class="nav-link
-          {% if view_name  == 'posts:create_post' %}active{% endif %}"
-           href="{% url 'posts:post_create' %}">Новая запись
-        </a>
-      </li>
-      {% endcomment %}
-
       <li class="nav-item">
         <a class="nav-link link-light
           {% if view_name  == 'users:password_change_form' %}active{% endif %}"

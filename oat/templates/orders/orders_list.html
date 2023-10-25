@@ -108,56 +108,6 @@
 
 
 
-
-
-{% comment %}
-Реализация через дивы
-
-<div class="container card-body">
-  <form method="post">{% csrf_token %}
-
-  <div class="table">
-    <div>
-      {{ formset.management_form }}
-      {{ formset.non_form_errors.as_ul }}
-
-      {% for form in formset.forms %}
-        {% if forloop.first %}
-        <div>
-
-            {% for field in form.visible_fields %}
-            <th>{{ field.label|capfirst }}</th>
-            {% endfor %}
-
-        </div>
-        {% endif %}
-
-        <div>
-          <div>
-            {% for field in form.visible_fields %}
-            <td>
-              {# Include the hidden fields in the form #}
-              {% if forloop.first %}
-                {% for hidden in form.hidden_fields %}
-                  {{ hidden }}
-                {% endfor %}
-              {% endif %}
-              {{ field.errors.as_ul }}
-              {{ field }}
-            </td>
-            {% endfor %}
-          </div>
-
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-
-{% endcomment %}
-
-
-
-
       <div class="container">
         <div class="d-flex justify-content-end" >
           <button name="close" type="submit" class="btn btn-main">

@@ -2,58 +2,23 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from .models import Order, Department
-from cars.models import TypeCar, Car
-from .forms import DateForm, OrderAddForm, OrderEditForm, OrderAddFormSet, OrderCloseForm, OrderCloseFormSet
-from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
-from django.forms import modelformset_factory
+from .forms import DateForm, OrderAddForm, OrderAddFormSet, OrderCloseFormSet
 import datetime
 import time
-from time import gmtime, strftime
 
 
-# УДАЛИТЬ !
-def paginator(request, queryset):
-    """Функция разделения (пагинации) заявок по датам."""
-    paginator = Paginator(queryset, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-    return {'page_obj': page_obj}
+# Количество заявок на странице для пагинатора
+ORDERS_ON_PAGE: int = 20
 
 
-# УДАЛИТЬ !
-@login_required
-def orders_list_(request):
-    """Общий список заявок на главной странице"""
-    orders = Order.objects.all()
-
-    departments = Department.objects.all()
-    cars = Car.objects.all()
-
-    if request.method == 'POST':
-        formset = OrderCloseFormSet(request.POST, queryset=orders)
-        if formset.is_valid():
-            # for form in formset:
-            #     form.save()
-            # formset = formset.save(commit=False)  # возврат несохраненных полей
-            formset.save()
-
-    formset = OrderCloseFormSet(queryset=orders)
-    context = {
-        'orders': orders,
-        'formset': formset,
-        'is_edit': True,
-        'departments': departments,
-    }
-
-    return render(request, 'orders/orders_list.html', context)
-
-
-# УДАЛИТЬ !
 @login_required
 def home_page(request):
-    """Стартовая страница."""
+    """
+    Стартовая страница.
+
+    Переводит пользователя на страницу заявок текущей даты.
+    """
+
     dt_now = datetime.datetime.now()
 
     return redirect(
@@ -65,7 +30,7 @@ def home_page(request):
 
 
 def get_date():
-    """Получение даты для формы даты в Заявке"""
+    """Получение даты для формы даты в Заявке."""
 
     dt_now = datetime.datetime.now()
     year = dt_now.year
@@ -82,8 +47,6 @@ def orders_list(request, year=None, month=None, day=None):
     # В случае отсутствия данных в форме будет открывать текущий день
     if not year or not month or not day:
         year, month, day = get_date()
-
-    # departments = Department.objects.all()
 
     date = DateForm(request.GET or None, initial={'year': year, 'month': month, 'day': day}, prefix='date')
 
@@ -105,36 +68,57 @@ def orders_list(request, year=None, month=None, day=None):
                 form.save()
 
     formset = OrderCloseFormSet(queryset=orders, prefix='order')
+
+    # Список подразделений для переключений в закладках
+    departments = Department.objects.all()
+
     context = {
         'orders': orders,
         'formset': formset,
-        # 'departments': departments,
         'year': year,
         'month': month,
         'day': day,
         'date': date,
+        'departments': departments,
     }
 
     return render(request, 'orders/orders_list.html', context)
 
 
+def paginator(request, queryset):
+    """Функция разделения (пагинации) заявок по страницам."""
+
+    paginator = Paginator(queryset, ORDERS_ON_PAGE)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return {'page_obj': page_obj}
+
+
 @login_required
 def department_orders_list(request, slug):
-    """Список заявок по цеховым подразделениям."""
+    """
+    Список заявок по подразделениям-заказчикам.
+
+    Отдаются все существующие заявки подразделения в порядке убывания по дате
+    публикации. Список разбит на страницы.
+    """
 
     department = get_object_or_404(Department, slug=slug)
     orders = department.orders.all()
 
+    # Список подразделений для переключения в закладках
     departments = Department.objects.all()
 
-    formset = OrderCloseFormSet(queryset=orders)
+    # Использование функции пагинации списка заявок
+    page_obj = paginator(request, orders)
 
     context = {
-        # 'page_obj': page_obj,
         'orders': orders,
         'departments': departments,
-        'formset': formset,
     }
+
+    context.update(page_obj)
 
     return render(request, 'orders/department_orders_list.html', context)
 
