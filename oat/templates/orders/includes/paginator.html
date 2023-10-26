@@ -21,7 +21,7 @@
           <li class="page-item active">
             <span class="page-link">{{ i }}</span>
           </li>
-        {% else %}
+        {% elif i > page_obj.number|add:"-3" and i < page_obj.number|add:"3" %}
           <li class="page-item">
             <a class="page-link" href="?page={{ i }}">{{ i }}</a>
           </li>

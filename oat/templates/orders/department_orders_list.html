@@ -13,7 +13,7 @@
     <table class="table table-light table-striped">
       <thead>
         <tr>
-          <th>№ п/п</th>
+{#          <th>№ п/п</th>#}
           <th>Марка ТС</th>
           <th>ГРЗ</th>
           <th>Тип ТС</th>
@@ -27,15 +27,15 @@
       <tbody>
         {% for order in page_obj %}  {# нужно все переделывать под заявки #}
           <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ order.brand }}</td>
-            <td>{{ order.reg_mark }}</td>
-            <td>{{ order.type_car }}</td>
-            <td>{{ order.route_movement }}</td>
-            <td>{{ order.time_delivery_car_on_base }}</td>
-            <td>{{ order.time_delivery_car_on_borehole }}</td>
-            <td>{{ order.quantity_hours }}</td>
-            <td>{{ order.note }}</td>
+{#            <td>{{ forloop.counter|default_if_none:"" }}</td>#}
+            <td>{{ order.brand|default_if_none:"" }}</td>
+            <td>{{ order.reg_mark|default_if_none:"" }}</td>
+            <td>{{ order.type_car|default_if_none:"" }}</td>
+            <td>{{ order.route_movement|default_if_none:"" }}</td>
+            <td>{{ order.time_delivery_car_on_base|default_if_none:"" }}</td>
+            <td>{{ order.time_delivery_car_on_borehole|default_if_none:"" }}</td>
+            <td>{{ order.quantity_hours|default_if_none:"" }}</td>
+            <td>{{ order.note|default_if_none:"" }}</td>
           </tr>
 
         {% endfor %}

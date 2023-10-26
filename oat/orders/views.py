@@ -1,14 +1,15 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
-from .models import Order, Department
-from .forms import DateForm, OrderAddForm, OrderAddFormSet, OrderCloseFormSet
 import datetime
-import time
+
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.shortcuts import render, get_object_or_404, redirect
+
+from .forms import DateForm, OrderAddFormSet, OrderCloseFormSet
+from .models import Order, Department
 
 
 # Количество заявок на странице для пагинатора
-ORDERS_ON_PAGE: int = 20
+ORDERS_ON_PAGE: int = 10
 
 
 @login_required
