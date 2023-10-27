@@ -1,10 +1,8 @@
-from django.urls import path, register_converter
+from django.urls import path
 from . import views
-from .converters import DateConverter
+
 
 app_name = 'orders'
-
-register_converter(DateConverter, 'date')
 
 urlpatterns = [
     path('', views.home_page, name='home_page'),

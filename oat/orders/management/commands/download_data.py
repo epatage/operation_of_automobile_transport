@@ -25,8 +25,11 @@ OBJECTS_LIST = {
 
 
 def clear_data(self):
-    """Функция очистки БД от имеющихся данных. Необходима для исключения
-    дублирования добавляемых элементов при повторном запуске основной команды.
+    """
+    Функция очистки БД от имеющихся данных.
+
+    Необходима для исключения дублирования добавляемых элементов при повторном
+    запуске основной команды.
     """
 
     for key, value in OBJECTS_LIST.items():
@@ -47,7 +50,7 @@ class Command(BaseCommand):
     help = "Загружает CSV данные из файла data/ingredients."
 
     def add_arguments(self, parser):
-        """Добавляет аргумент для удаления всех имеющихся в БД данных"""
+        """Добавляет аргумент для удаления всех имеющихся в БД данных."""
 
         parser.add_argument(
             "--delete-existing",
@@ -110,7 +113,7 @@ class Command(BaseCommand):
             type_id = (sheet[row][3].value)
             column_id = int(sheet[row][4].value)
 
-            record = Car(id=id, brand=brand, reg_mark=reg_mark,  column_id=column_id, type_id=type_id,)
+            record = Car(id=id, brand=brand, reg_mark=reg_mark,  column_id=column_id, type_car_id=type_id,)
             records.append(record)
 
         Car.objects.bulk_create(records)

@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import DateForm, OrderAddFormSet, OrderCloseFormSet
 from .models import Order, Department
+# from .db_query import query_debugger
 
 
 # Количество заявок на странице для пагинатора
@@ -41,6 +42,7 @@ def get_date():
     return year, month, day
 
 
+# @query_debugger
 @login_required
 def orders_list(request, year=None, month=None, day=None):
     """Общий список заявок на главной странице по дням."""

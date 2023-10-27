@@ -1,7 +1,6 @@
 from django import forms
-from django.forms import inlineformset_factory, modelformset_factory
+from django.forms import modelformset_factory
 from .models import Order
-from cars.models import Car, TypeCar
 from .validators import validate_day, validate_year, validate_month
 
 
@@ -18,7 +17,6 @@ class OrderAddForm(forms.ModelForm):
             'time_delivery_car_on_borehole',
             'quantity_hours',
             'note',
-            #'department',  # впоследствии нужно убрать !!! (меняется на request.customer)
         )
         widgets = {
             'order_date': forms.TextInput(attrs={
@@ -56,11 +54,6 @@ class OrderAddForm(forms.ModelForm):
                 'style': 'width: 200px',
                 'placeholder': 'Примечание',
             }),
-            # 'department': forms.Select(attrs={
-            #     'class': 'form-control-sm',
-            #     'style': 'width: 120px',
-            #     'placeholder': 'Цех/отдел',
-            # }),
         }
 
 
@@ -139,7 +132,7 @@ OrderCloseFormSet = modelformset_factory(
 
 
 class DateForm(forms.Form):
-    """Форма определения даты"""
+    """Форма определения даты."""
 
     year = forms.IntegerField(
         label='Год',

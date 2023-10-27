@@ -4,6 +4,7 @@ from django.db import models
 class ActiveCarManager(models.Manager):
     """
     Менеджер модели Car.
+
     Выборка в Queryset транспортных средств находящихся в эксплуатации,
     для которых active=True.
     """
@@ -13,7 +14,10 @@ class ActiveCarManager(models.Manager):
 
 
 class Car(models.Model):
-    """Удаление ТС при наличии связи с заявкой невозможно!
+    """
+    Модель транспортных средств.
+
+    Удаление ТС при наличии связи с заявкой невозможно!
     ТС может редактироваться. ТС может быть активировано/деактивировано
     для перевода из/в архивное состояние.
     """
@@ -44,14 +48,18 @@ class Car(models.Model):
         default=True,
     )
 
-    objects = models.Manager()  # Менеджер модели по-умолчанию
-    activated = ActiveCarManager()  # Менеджер для активных ТС
+    # Менеджер модели по-умолчанию
+    objects = models.Manager()
+    # Менеджер для активных (в эксплуатации) ТС
+    activated = ActiveCarManager()
 
     def __str__(self):
         return f'{self.reg_mark}'
 
 
 class Column(models.Model):
+    """Модель автоколонн транспортных средств."""
+
     title = models.CharField(max_length=50)
     location = models.CharField(max_length=200)
     slug = models.SlugField('slug', unique=True)
@@ -61,7 +69,10 @@ class Column(models.Model):
 
 
 class TypeCar(models.Model):
-    """Удаление типа ТС при наличии связи с заявкой невозможно!
+    """
+    Модель типа транспортных средств.
+
+    Удаление типа ТС при наличии связи с заявкой невозможно!
     Тип ТС может редактироваться. Тип ТС может быть активирован/деактивирован
     для перевода из/в архивное состояние.
     """
