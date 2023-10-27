@@ -15,7 +15,7 @@ app_name = 'users'
 
 urlpatterns = [
     path('users-list', views.users_list, name='users_list'),
-    path('profile/<str:username>/', views.profile, name='profile'),
+    path('profile/<int:user_id>/', views.profile, name='profile'),
     path(
         'logout/',
         LogoutView.as_view(template_name='users/logged_out.html'),

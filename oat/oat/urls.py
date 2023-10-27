@@ -11,7 +11,7 @@ urlpatterns = [
     path('api/', include('api.urls', namespace='api')),
     path('about/', include('about.urls', namespace='about')),
     path('cars/', include('cars.urls', namespace='cars')),
-    path('', include('orders.urls', namespace='orders')),  # будет выводить главную страницу заявок
+    path('', include('orders.urls', namespace='orders')),
 ]
 
 

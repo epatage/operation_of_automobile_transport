@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 class SignUp(CreateView):
     """Авторизация пользователя."""
+
     form_class = CreationForm
     success_url = reverse_lazy('cars:cars_list')
     template_name = 'users/signup.html'
@@ -16,6 +17,7 @@ class SignUp(CreateView):
 @login_required()
 def users_list(request):
     """Список сотрудников."""
+
     users = User.objects.all()
 
     context = {
@@ -25,9 +27,10 @@ def users_list(request):
 
 
 @login_required()
-def profile(request, username):
+def profile(request, user_id):
     """Профайл пользователя."""
-    user = get_object_or_404(User, username=username)
+
+    user = get_object_or_404(User, pk=user_id)
 
     context = {
         'user': user,
