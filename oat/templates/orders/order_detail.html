@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load user_filters %}
+{% load static %}
+
+{% block title %}
+  Список заявок
+{% endblock %}
+
+{% block content %}
+
+   <h3> Информация по заявке: {{ id }} </h3>
+
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+
+    <div class="container card-body">
+
+        {{ text }}
+
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
