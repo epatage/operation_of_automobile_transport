@@ -32,33 +32,33 @@ class Order(models.Model):
         help_text='Тип транспортного средства',
     )
     route_movement = models.CharField(
+        'Маршрут движения',
         max_length=100,
-        verbose_name='Маршрут движения',
         help_text='Маршрут движения',
     )
     time_delivery_car_on_base = models.CharField(
+        'Время подачи на БПО',
         max_length=100,
-        verbose_name='Время подачи на БПО',
         help_text='Время подачи на БПО',
         null=True,
         blank=True,
     )
     time_delivery_car_on_borehole = models.CharField(
+        'Время подачи на скважину',
         max_length=100,
-        verbose_name='Время подачи на скважину',
         help_text='Время подачи на скважину',
         null=True,
         blank=True,
     )
     quantity_hours = models.IntegerField(
-        verbose_name='Количество часов',
+        'Количество часов',
         help_text='Количество часов',
         null=True,
         blank=True,
     )
     note = models.CharField(
+        'Примечание',
         max_length=300,
-        verbose_name='Примечание',
         help_text='Примечание',
         null=True,
         blank=True,
@@ -103,4 +103,4 @@ class Order(models.Model):
         ordering = ('-pub_date',)
 
     def __str__(self):
-        return f'{self.route_movement} {self.type_car}'
+        return f'Маршрут:{self.route_movement}, Тип ТС: {self.type_car}'

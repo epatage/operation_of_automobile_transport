@@ -172,10 +172,14 @@ def order_detail(request, order_id):
 
     text = 'text'
 
+    order = get_object_or_404(Order, id=order_id)
+    user = request.user
+
     context = {
-        # 'orders': orders,
+        'order': order,
         'id': order_id,
         'text': text,
+        'user': user,
     }
 
     return render(request, 'orders/order_detail.html', context)

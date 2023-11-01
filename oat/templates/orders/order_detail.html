@@ -8,18 +8,31 @@
 
 {% block content %}
 
-   <h3> Информация по заявке: {{ id }} </h3>
-
-
 <div class="container py-5">
   <div class="row justify-content-center">
+    <h4> Информация по заявке:</h4>
+    <h6>{{ order.department }} - {{ order.route_movement }} ({{ order.order_date }}) </h6>
 
-    <div class="container card-body">
+      <br>
+      {% if order.department == user.department %}
+        <p><a href="{% url 'orders:order_edit' order.id %}">Редактировать</a></p>
+      {% endif %}
+      <br>
 
-        {{ text }}
+      <p><b>Дата заявки</b> - {{ order.order_date }}</p>
+      <p><b>Маршрут движения></b> - {{ order.route_movement }}</p>
 
+      <p><b>Тип транспортного средства</b> - {{ order.type_car }}</p>
+      <p><b>Транспортное средство</b> - {% if order.car == None %} = пусто = {% else %}{{ order.car }} {% endif %}</p>
 
-    </div>
+      <p><b>Время подачи на БПО</b> - {% if order.time_delivery_car_on_base == None %} = пусто = {% else %}{{ order.time_delivery_car_on_base }} {% endif %}</p>
+      <p><b>Время подачи на скважину</b> - {% if order.time_delivery_car_on_borehole == None %} = пусто = {% else %}{{ order.time_delivery_car_on_borehole }} {% endif %}</p>
+      <p><b>Количество часов</b> - {% if order.quantity_hours == None %} = пусто = {% else %}{{ order.quantity_hours }} {% endif %}</p>
+      <p><b>Примечание</b> - {% if order.note == None %} = пусто = {% else %}{{ order.note }} {% endif %}</p>
+      <p><b>Цех/отдел/департамент</b> - {{ order.department }}</p>
+      <p><b>Дата и время отправки заявки</b> - {{ order.pub_date }}</p>
+      <p><b>Дата и время редактирования заявки</b> - {{ order.edit_date }}</p>
+      <p><b>Заказчик</b> - {{ order.customer.last_name }} {{ order.customer.first_name }} {{ order.customer.patronymic }}</p>
 
   </div>
 </div>
