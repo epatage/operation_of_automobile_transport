@@ -199,7 +199,7 @@ def order_edit(request, order_id):
 
     order = get_object_or_404(Order, id=order_id)
 
-    if order.customer != request.user:
+    if order.department != request.user.department:
         return redirect('orders:order_detail', order_id=order.id)
 
     form = OrderEditForm(
