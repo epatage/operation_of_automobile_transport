@@ -73,13 +73,13 @@ class Order(models.Model):
         help_text='Цех/отдел/департамент',
     )
     pub_date = models.DateTimeField(
-        'Дата и время отправки заявки',
+        'Дата и время создания заявки',
         auto_now_add=True,
         null=True,
         blank=False,
     )
     edit_date = models.DateTimeField(
-        'Дата и время редактирования заявки',
+        'Дата и время последнего редактирования заявки',
         auto_now=True,
         null=True,
         blank=False,

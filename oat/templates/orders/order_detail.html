@@ -30,8 +30,8 @@
       <p><b>Количество часов</b> - {% if order.quantity_hours == None %} = пусто = {% else %}{{ order.quantity_hours }} {% endif %}</p>
       <p><b>Примечание</b> - {% if order.note == None %} = пусто = {% else %}{{ order.note }} {% endif %}</p>
       <p><b>Цех/отдел/департамент</b> - {{ order.department }}</p>
-      <p><b>Дата и время отправки заявки</b> - {{ order.pub_date }}</p>
-      <p><b>Дата и время редактирования заявки</b> - {{ order.edit_date }}</p>
+      <p><b>Дата и время создания заявки</b> - {{ order.pub_date }}</p>
+      <p><b>Дата и время последнего редактирования заявки</b> - {{ order.edit_date }}</p>
       <p><b>Заказчик</b> - {{ order.customer.last_name }} {{ order.customer.first_name }} {{ order.customer.patronymic }}</p>
 
   </div>

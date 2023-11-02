@@ -61,123 +61,66 @@
 
 <div class="container py-5">
   <div class="row justify-content-center">
+    <div class="container card-body">
+
+      <form method="post" action="{% url 'orders:orders_list' year month day %}">
+        {% csrf_token %}
+
+        {{ formset.management_form }}
+        {{ formset.non_form_errors.as_ul }}
+        <table class="table table-order" id="order-formset">
 
 
+          {% for form in formset %}
+            {% if forloop.first %}
+              <thead>
+                <tr>
+                  {% for field in form.visible_fields %}
+                    <th>{{ field.label|capfirst }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+            {% endif %}
+
+            <tbody>
+              <tr>
+               {% for field in form %}
+                  <td>
+                  {% if field == car %}
+                    {# Блок позволяет сохранять изменения при выборе/изменении ТС для закрытия заявки#}
+                    {% for hidden in form.hidden_fields %}
+                     {{ hidden }}
+                    {% endfor %}
+                  {%  endif %}
+
+                  {% if field == form.route_movement %}
+                    <a href="{% url 'orders:order_detail' form.id.value %}">
+                      {{ field|addclass:'input-box input-select' }}
+                    </a>
+                  {% else %}
+                    {{ field|addclass:'input-box input-select' }}
+                  {% endif %}
+                  </td>
+                 {% endfor %}
+              </tr>
+            </tbody>
+
+          {% endfor %}
+        </table>
 
 
-<div class="container card-body">
-
-  <form method="post" action="{% url 'orders:orders_list' year month day %}">
-    {% csrf_token %}
-
-    {{ formset.management_form }}
-    {{ formset.non_form_errors.as_ul }}
-    <table class="table table-order" id="order-formset">
-
-
-      {% for form in formset %}
-        {% if forloop.first %}
-          <thead>
-            <tr>
-              {% for field in form.visible_fields %}
-                <th>{{ field.label|capfirst }}</th>
-              {% endfor %}
-            </tr>
-          </thead>
-        {% endif %}
-
-        <tbody>
-{#        <tr>#}
-{#          {% for field in form.hidden_fields %}#}
-{#            <td>#}
-{#              {{ field.auto_id }}#}
-{#            </td>#}
-{#            <td>#}
-{#              {{ field }}#}
-{#            </td>#}
-{#            {%  endfor %}#}
-{#        </tr>#}
-          <tr>
-              <td>
-                {# Блок позволяет сохранять изменения при выборе/изменении ТС для закрытия заявки #}
-                {% for hidden in form.hidden_fields %}
-                 {{ hidden }}
-                {% endfor %}
-
-                {{ form.car|addclass:'input-box input-select' }}
-              </td>
-              <td>
-               {{ form.type_car|addclass:'input-box input-select' }}
-              </td>
-              <td>
-                <a href="{% url 'orders:order_detail' form.id.value %}">
-                  {{ form.route_movement|addclass:'input-box input-select' }}
-                </a>
-              </td>
-              <td>
-               {{ form.time_delivery_car_on_base|addclass:'input-box input-select' }}
-              </td>
-              <td>
-               {{ form.time_delivery_car_on_borehole|addclass:'input-box input-select' }}
-              </td>
-              <td>
-               {{ form.quantity_hours|addclass:'input-box input-select' }}
-              </td>
-              <td>
-               {{ form.note|addclass:'input-box input-select' }}
-              </td>
-              <td>
-               {{ form.department|addclass:'input-box input-select' }}
-              </td>
-{#          <td>{{ form.id.value }}</td>#}
-          </tr>
-        </tbody>
-
-
-
-{#        <tbody>#}
-{#          <tr>#}
-{#           {% for field in form %}#}
-{#              <td>#}
-{#              {% if field == car %}#}
-                {# Блок позволяет сохранять изменения при выборе/изменении ТС для закрытия заявки #}
-{#                {% for hidden in form.hidden_fields %}#}
-{#                 {{ hidden }}#}
-{#                {% endfor %}#}
-{#              {%  endif %}#}
-{##}
-{#              {% if field == route_movement %}#}
-{#              <a href="{% url 'orders:order_add' form.id  %}">#}
-{#                  {{ field|addclass:'input-box input-select' }}#}
-{#                </a>#}
-{#              {% else %}#}
-{#                {{ field|addclass:'input-box input-select' }}#}
-{#              {% endif %}#}
-{#              </td>#}
-{##}
-{#             {%  endfor %}#}
-{#          </tr>#}
-{#        </tbody>#}
-
-      {% endfor %}
-    </table>
-
-
-
-      <div class="container">
-        <div class="d-flex justify-content-end" >
-          <button name="close" type="submit" class="btn btn-main">
-            Закрытие
-          </button>
+        <div class="container">
+          <div class="d-flex justify-content-end" >
+            <button name="close" type="submit" class="btn btn-main">
+              Закрытие
+            </button>
+          </div>
         </div>
-      </div>
 
-  </form>
+      </form>
 
-</div>
-
-
-</div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

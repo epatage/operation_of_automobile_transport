@@ -4,9 +4,9 @@
 
 {% block title %}
   {% if is_edit %}
-    Редактировать информацию о ТС
+    Редактировать заявку
   {% else %}
-    Добавить ТС
+    Добавить заявку
   {% endif %}
 {% endblock %}
 
@@ -25,14 +25,14 @@
 
         <div class="card-body">
           <form class="form-control" method="post" id="form-container">
-            {% csrf_token %}
+          {% csrf_token %}
 
+          {# Блок отправки заявки #}
+          {% if not is_edit %}
             <div class="">
               {{ formset.management_form }}
               {% for form in formset.forms %}
-
                 <div class="order-form container"> {# Блок для работы JS. Динамическое добавление заявки. #}
-
                   <div class="row g-1 my-1">
                     {% for field in form %}
                       <div class="col d-block"
@@ -48,12 +48,10 @@
                           aria-required="false">
                           <label for="id_text"></label>
                         {% endif %}
-
                         {{ field }}
                       </div>
                     {% endfor %}
                   </div>
-
                   <hr>
                 </div>
               {% endfor %}
@@ -67,6 +65,15 @@
               </button>
             </div>
 
+            {# Блок редактирования заявки #}
+            {% else %}
+            <div class="container">
+              {% for field in form %}
+                <p>{{ field.label_tag }} {{ field }} {{ field.errors }}</p>
+              {% endfor %}
+            </div>
+            {% endif %}
+
             <div class="d-flex justify-content-end my-3" >
               <button type="submit" class="btn btn-main">
                 {% if is_edit %}
@@ -79,7 +86,6 @@
 
           </form>
         </div>
-
       </div>
     </div>
   </div>

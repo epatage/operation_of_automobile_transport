@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .forms import DateForm, OrderAddFormSet, OrderCloseFormSet
+from .forms import DateForm, OrderAddFormSet, OrderCloseFormSet, OrderEditForm
 from .models import Order, Department
 # from .db_query import query_debugger
 
@@ -187,13 +187,31 @@ def order_detail(request, order_id):
 
 # Редактирование заявки (заменить отменой заявки?)
 @login_required
-def order_edit(request, pk):
-    context = {
-        # 'orders': orders,
-        # 'page_obj': page_obj,
-    }
+def order_edit(request, order_id):
+    """
+    Редактирование заявки.
 
-    return render(request, 'orders/ ..... .html', context)
+    Изменение данных заявки может делать только пользователь относящийся к
+    подразделению-заказчику.
+    При сохранении отредактированных данных обновляется информация по дате и
+    времени последнего изменения заявки.
+    """
+
+    order = get_object_or_404(Order, id=order_id)
+
+    if order.customer != request.user:
+        return redirect('orders:order_detail', order_id=order.id)
+
+    form = OrderEditForm(
+        request.POST or None,
+        instance=order,
+    )
+    context = {'form': form, 'is_edit': True}
+
+    if form.is_valid():
+        form.save()
+        return redirect('orders:order_detail', order_id=order_id)
+    return render(request, 'orders/order_add.html', context)
 
 
 # Удаление заявки (отказ)

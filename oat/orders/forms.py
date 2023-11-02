@@ -4,20 +4,27 @@ from .models import Order
 from .validators import validate_day, validate_year, validate_month
 
 
-class OrderAddForm(forms.ModelForm):
-    """Форма для добавления заявки."""
+class BaseOrderForm(forms.ModelForm):
+    """Базовая форма заявок."""
 
     class Meta:
         model = Order
         fields = (
-            'order_date',
             'type_car',
             'route_movement',
             'time_delivery_car_on_base',
             'time_delivery_car_on_borehole',
             'quantity_hours',
             'note',
+            'department',
         )
+
+
+class OrderAddForm(BaseOrderForm):
+    """Форма для добавления заявки."""
+
+    class Meta(BaseOrderForm.Meta):
+        exclude = ('department',)
         widgets = {
             'order_date': forms.TextInput(attrs={
                 'class': 'form-control-sm',
@@ -57,58 +64,19 @@ class OrderAddForm(forms.ModelForm):
         }
 
 
-# Нужно изменить поля формы
-# не все поля можно менять, добавляется поле "время изменения заявки"
-class OrderEditForm(forms.ModelForm):
+class OrderEditForm(BaseOrderForm):
     """Форма для редактирования заявки."""
 
-    class Meta:
-        model = Order
-        fields = {
-            'car',
-            'type_car',
-            'route_movement',
-            'time_delivery_car_on_base',
-            'time_delivery_car_on_borehole',
-            'quantity_hours',
-            'note',
-            'department',
-        }
-        widgets = {
-            'size': forms.TextInput(            # size ??
-                attrs={
-                    'class': 'form-control',
-                }
-            ),
-        }
+    class Meta(BaseOrderForm.Meta):
+        exclude = ('department',)
 
 
-"""FormSet для оформления (подачи) заявки."""
-OrderAddFormSet = modelformset_factory(
-    Order,
-    form=OrderAddForm,
-    extra=1,
-    can_delete=False,
-)
-
-
-# Нужно изменить поля формы
-# не все поля можно менять, добавляется поле "время изменения заявки"
-class OrderCloseForm(forms.ModelForm):
+class OrderCloseForm(BaseOrderForm):
     """Форма для закрытия заявок на главной странице."""
 
-    class Meta:
+    class Meta(BaseOrderForm.Meta):
         model = Order
-        fields = (
-            'car',
-            'type_car',
-            'route_movement',
-            'time_delivery_car_on_base',
-            'time_delivery_car_on_borehole',
-            'quantity_hours',
-            'note',
-            'department',
-        )
+        fields = ('car',) + BaseOrderForm.Meta.fields
 
         widgets = {
             'car': forms.Select(attrs={'style': 'width: 100%'}),
@@ -122,6 +90,15 @@ class OrderCloseForm(forms.ModelForm):
         }
 
 
+"""FormSet для оформления (подачи) заявки."""
+OrderAddFormSet = modelformset_factory(
+    Order,
+    form=OrderAddForm,
+    extra=1,
+    can_delete=False,
+)
+
+
 """FormSet для вывода заявок на главную страницу (закрытие заявок)."""
 OrderCloseFormSet = modelformset_factory(
     Order,
@@ -132,7 +109,7 @@ OrderCloseFormSet = modelformset_factory(
 
 
 class DateForm(forms.Form):
-    """Форма определения даты."""
+    """Форма выбора даты."""
 
     year = forms.IntegerField(
         label='Год',
