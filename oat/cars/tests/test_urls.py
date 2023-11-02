@@ -85,7 +85,10 @@ class CarURLTest(TestCase):
         """URL-адрес использует соответствующий шаблон."""
         url_templates_names = (
             ('/cars/', 'cars/cars_list.html'),
-            (f'/cars/column/{self.column.slug}/', 'cars/column_cars_list.html'),
+            (
+                f'/cars/column/{self.column.slug}/',
+                'cars/column_cars_list.html',
+            ),
             (f'/cars/{self.car.id}/', 'cars/car_detail.html'),
             ('/cars/add/', 'cars/car_add.html'),
             (f'/cars/{self.car.id}/edit/', 'cars/car_add.html'),

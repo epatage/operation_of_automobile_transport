@@ -81,11 +81,21 @@ class OrderCloseForm(BaseOrderForm):
         widgets = {
             'car': forms.Select(attrs={'style': 'width: 100%'}),
             'type_car': forms.Select(attrs={'style': 'width: 100%'}),
-            'route_movement': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
-            'time_delivery_car_on_base': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
-            'time_delivery_car_on_borehole': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
-            'quantity_hours': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
-            'note': forms.TextInput(attrs={'readonly': 'True', 'style': 'width: 100%'}),
+            'route_movement': forms.TextInput(
+                attrs={'readonly': 'True', 'style': 'width: 100%'}
+            ),
+            'time_delivery_car_on_base': forms.TextInput(
+                attrs={'readonly': 'True', 'style': 'width: 100%'}
+            ),
+            'time_delivery_car_on_borehole': forms.TextInput(
+                attrs={'readonly': 'True', 'style': 'width: 100%'}
+            ),
+            'quantity_hours': forms.TextInput(
+                attrs={'readonly': 'True', 'style': 'width: 100%'}
+            ),
+            'note': forms.TextInput(
+                attrs={'readonly': 'True', 'style': 'width: 100%'}
+            ),
             'department': forms.Select(attrs={'style': 'width: 100%'}),
         }
 
@@ -114,8 +124,8 @@ class DateForm(forms.Form):
     year = forms.IntegerField(
         label='Год',
         widget=forms.TextInput(attrs={
-                'class': 'form-control-sm',
-                'style': 'width: 200px',
+            'class': 'form-control-sm',
+            'style': 'width: 200px',
         }),
         validators=[validate_year]
     )

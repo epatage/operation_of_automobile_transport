@@ -19,5 +19,7 @@ class OrderCreateViewSet(viewsets.ModelViewSet):
     # Делал для корректного вывода ГРЗ
     # def get_queryset(self):
     #     application_id = self.kwargs.get('application_id')
-    #     new_queryset = Application.objects.filter(application_id=application_id)
+    #     new_queryset = Application.objects.filter(
+    #     application_id=application_id
+    #     )
     #     return new_queryset

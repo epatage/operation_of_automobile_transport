@@ -51,7 +51,11 @@ def orders_list(request, year=None, month=None, day=None):
     if not year or not month or not day:
         year, month, day = get_date()
 
-    date = DateForm(request.GET or None, initial={'year': year, 'month': month, 'day': day}, prefix='date')
+    date = DateForm(
+        request.GET or None,
+        initial={'year': year, 'month': month, 'day': day},
+        prefix='date'
+    )
 
     if date.is_valid():
         year = date.cleaned_data['year']
@@ -61,10 +65,14 @@ def orders_list(request, year=None, month=None, day=None):
         # Если данные некорректны будет открывать текущий день
         year, month, day = get_date()
 
-    orders = Order.objects.filter(order_date__year=year, order_date__month=month, order_date__day=day)
+    orders = Order.objects.filter(
+        order_date__year=year, order_date__month=month, order_date__day=day
+    )
 
     if request.method == 'POST':
-        formset = OrderCloseFormSet(request.POST or None, queryset=orders, prefix='order')
+        formset = OrderCloseFormSet(
+            request.POST or None, queryset=orders, prefix='order'
+        )
         if formset.is_valid():
             formset.save(commit=False)
             for form in formset:

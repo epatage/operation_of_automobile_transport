@@ -12,9 +12,11 @@ def addclass(field, css):
 def addstyle(field, css):
     return field.as_widget(attrs={'style': css})
 
+
 @register.filter
 def addclass_fc_sm(field):
     return field.as_widget(attrs={'class': 'form-control-sm'})
+
 
 @register.filter
 def addstyle_disable(field, css):

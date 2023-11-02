@@ -1,8 +1,8 @@
-from django.test import TestCase, Client
-from ..models import Car, TypeCar, Column
-from django import forms
 from django.contrib.auth import get_user_model
+from django.test import TestCase, Client
 from django.urls import reverse
+
+from ..models import Car, TypeCar, Column
 
 User = get_user_model()
 

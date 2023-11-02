@@ -5,7 +5,11 @@ from . import views
 app_name = 'orders'
 
 urlpatterns = [
-    path('orders/<year>/<month>/<day>/', views.orders_list, name='orders_list'),
+    path(
+        'orders/<year>/<month>/<day>/',
+        views.orders_list,
+        name='orders_list',
+    ),
     path(
         'department/<slug:slug>/',
         views.department_orders_list,

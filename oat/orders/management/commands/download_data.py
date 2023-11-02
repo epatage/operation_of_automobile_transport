@@ -1,11 +1,8 @@
 import openpyxl
-import pandas as pd
-from django.core.management.base import BaseCommand
-import csv
 from cars.models import TypeCar, Column, Car
-from users.models import User, Department
+from django.core.management.base import BaseCommand
 from orders.models import Order
-
+from users.models import User, Department
 
 """
 При запуске команды с аргументом --delete-existing все существующие записи
@@ -113,7 +110,13 @@ class Command(BaseCommand):
             type_id = (sheet[row][3].value)
             column_id = int(sheet[row][4].value)
 
-            record = Car(id=id, brand=brand, reg_mark=reg_mark,  column_id=column_id, type_car_id=type_id,)
+            record = Car(
+                id=id,
+                brand=brand,
+                reg_mark=reg_mark,
+                column_id=column_id,
+                type_car_id=type_id,
+            )
             records.append(record)
 
         Car.objects.bulk_create(records)
