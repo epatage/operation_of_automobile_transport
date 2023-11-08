@@ -1,8 +1,6 @@
 from django.test import TestCase
-from django.contrib.auth import get_user_model
-from ..models import Car, Column, TypeCar
 
-User = get_user_model()
+from ..models import Car, Column, TypeCar
 
 
 class CarModelTest(TestCase):
@@ -21,7 +19,7 @@ class CarModelTest(TestCase):
         cls.car = Car.objects.create(
             brand='Камаз',
             reg_mark='О111ОО64',
-            type=cls.type_car,
+            type_car=cls.type_car,
             column=cls.column,
         )
 
@@ -31,4 +29,4 @@ class CarModelTest(TestCase):
 
         self.assertEqual(car.reg_mark, self.car.reg_mark)
         self.assertEqual(car.column.title, self.car.column.title)
-        self.assertEqual(car.type.title, self.car.type.title)
+        self.assertEqual(car.type_car.title, self.car.type_car.title)

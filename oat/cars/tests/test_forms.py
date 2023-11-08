@@ -1,46 +1,52 @@
-from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
+from users.models import User, Department
 
 from ..models import Car, TypeCar, Column
-
-User = get_user_model()
 
 
 class CarAndColumnViewTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = User.objects.create_user(username='Вася')
+        cls.department = Department.objects.create(title='Департамент', slug='depart')
+        cls.user = User.objects.create(
+            username='',
+            last_name='Иванов',
+            first_name='Иван',
+            patronymic='Иванович',
+            department=cls.department,
+            position='Специалист',
+        )
 
         cls.column_num_1 = Column.objects.create(
-            title='Автоколонна_1',
-            location='Степное',
-            slug='AK_1',
+            title='Автоколонна_1_test',
+            location='Степное_test',
+            slug='AK_1_test',
         )
         cls.column_num_2 = Column.objects.create(
-            title='Автоколонна_2',
-            location='Саратов',
-            slug='AK_2',
+            title='Автоколонна_2_test',
+            location='Саратов_test',
+            slug='AK_2_test',
         )
         cls.type_car_truck = TypeCar.objects.create(
-            title='грузовая',
-            slug='truck',
+            title='грузовая_test',
+            slug='truck_test',
         )
         cls.type_car_autocrane = TypeCar.objects.create(
-            title='автокран',
-            slug='autocrane',
+            title='автокран_test',
+            slug='autocrane_test',
         )
         cls.car_truck = Car.objects.create(
-            brand='Камаз',
+            brand='Камаз_test',
             reg_mark='В111ВО64',
-            type=cls.type_car_truck,
+            type_car=cls.type_car_truck,
             column=cls.column_num_1,
         )
         cls.car_autocrane = Car.objects.create(
             brand='Урал',
-            reg_mark='Р929ОВ64',
-            type=cls.type_car_autocrane,
+            reg_mark='В222ВО64',
+            type_car=cls.type_car_autocrane,
             column=cls.column_num_2,
         )
 
@@ -57,7 +63,7 @@ class CarAndColumnViewTest(TestCase):
         form_data = {
             'reg_mark': 'Р000РР64',
             'brand': 'Камаз',
-            'type': self.type_car_autocrane.id,
+            'type_car': self.type_car_autocrane.id,
             'column': self.column_num_1.id,
         }
 
@@ -72,7 +78,7 @@ class CarAndColumnViewTest(TestCase):
             Car.objects.filter(
                 reg_mark='Р000РР64',
                 brand='Камаз',
-                type=self.type_car_autocrane,
+                type_car=self.type_car_autocrane,
                 column=self.column_num_1,
             ).exists()
         )
@@ -83,7 +89,7 @@ class CarAndColumnViewTest(TestCase):
         self.car = Car.objects.create(
             reg_mark='Т000ТТ64',
             brand='ВАЗ',
-            type=self.type_car_autocrane,
+            type_car=self.type_car_autocrane,
             column=self.column_num_1,
         )
 
@@ -92,7 +98,7 @@ class CarAndColumnViewTest(TestCase):
         form_data = {
             'reg_mark': 'Н111НН64',
             'brand': 'ГАЗ',
-            'type': self.type_car_truck,
+            'type_car': self.type_car_truck,
             'column': self.column_num_2,
         }
 
@@ -103,6 +109,6 @@ class CarAndColumnViewTest(TestCase):
         )
         self.assertEqual(Car.objects.count(), cars_count)
         self.assertNotEqual(self.car.reg_mark, form_data['reg_mark'])
-        self.assertNotEqual(self.car.type, form_data['type'])
+        self.assertNotEqual(self.car.type_car, form_data['type_car'])
         self.assertNotEqual(self.car.brand, form_data['brand'])
         self.assertNotEqual(self.car.column, form_data['column'])

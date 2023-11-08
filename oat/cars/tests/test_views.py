@@ -1,46 +1,53 @@
-from django.test import TestCase, Client
-from ..models import Car, TypeCar, Column
 from django import forms
-from django.contrib.auth import get_user_model
+from django.test import TestCase, Client
 from django.urls import reverse
+from users.models import User, Department
 
-User = get_user_model()
+from ..models import Car, TypeCar, Column
 
 
 class CarAndColumnViewTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = User.objects.create_user(username='Вася')
+        cls.department = Department.objects.create(title='Департамент', slug='depart')
+        cls.user = User.objects.create(
+            username='',
+            last_name='Иванов',
+            first_name='Иван',
+            patronymic='Иванович',
+            department=cls.department,
+            position='Специалист',
+        )
 
         cls.column_num_1 = Column.objects.create(
-            title='Автоколонна_1',
-            location='Степное',
-            slug='AK_1',
+            title='Автоколонна_1_test',
+            location='Степное_test',
+            slug='AK_1_test_view',
         )
         cls.column_num_2 = Column.objects.create(
-            title='Автоколонна_2',
-            location='Саратов',
-            slug='AK_2',
+            title='Автоколонна_2_test',
+            location='Саратов_test',
+            slug='AK_2_test_view',
         )
         cls.type_car_truck = TypeCar.objects.create(
-            title='грузовая',
-            slug='truck',
+            title='грузовая_test',
+            slug='truck_test_view',
         )
         cls.type_car_autocrane = TypeCar.objects.create(
-            title='автокран',
-            slug='autocrane',
+            title='автокран_test',
+            slug='autocrane_test_view',
         )
         cls.car_truck = Car.objects.create(
             brand='Камаз',
             reg_mark='В111ВО64',
-            type=cls.type_car_truck,
+            type_car=cls.type_car_truck,
             column=cls.column_num_1,
         )
         cls.car_autocrane = Car.objects.create(
             brand='Урал',
             reg_mark='Р929ОВ64',
-            type=cls.type_car_autocrane,
+            type_car=cls.type_car_autocrane,
             column=cls.column_num_2,
         )
 
@@ -83,12 +90,12 @@ class CarAndColumnViewTest(TestCase):
                 test_car = car
 
                 car_reg_mark = test_car.reg_mark
-                car_type = test_car.type.title
+                car_type_car = test_car.type_car.title
                 car_brand = test_car.brand
                 car_column = test_car.column.title
 
                 self.assertEqual(car_reg_mark, self.car_truck.reg_mark)
-                self.assertEqual(car_type, self.car_truck.type.title)
+                self.assertEqual(car_type_car, self.car_truck.type_car.title)
                 self.assertEqual(car_brand, self.car_truck.brand)
                 self.assertEqual(car_column, self.car_truck.column.title)
 
@@ -117,7 +124,7 @@ class CarAndColumnViewTest(TestCase):
         car = response.context['car']
         self.assertEqual(car.reg_mark, self.car_truck.reg_mark)
         self.assertEqual(car.column, self.car_truck.column)
-        self.assertEqual(car.type, self.car_truck.type)
+        self.assertEqual(car.type_car, self.car_truck.type_car)
         self.assertEqual(car.brand, self.car_truck.brand)
 
     def test_car_add_page_show_correct_context(self):
@@ -125,7 +132,7 @@ class CarAndColumnViewTest(TestCase):
         response = self.authorized_user.get(reverse('cars:car_add'))
         form_fields = {
             'reg_mark': forms.fields.CharField,
-            'type': forms.fields.ChoiceField,
+            'type_car': forms.fields.ChoiceField,
             'column': forms.fields.ChoiceField,
             'brand': forms.fields.CharField,
         }
@@ -145,7 +152,7 @@ class CarAndColumnViewTest(TestCase):
 
         form_fields = {
             'reg_mark': forms.fields.CharField,
-            'type': forms.fields.ChoiceField,
+            'type_car': forms.fields.ChoiceField,
             'column': forms.fields.ChoiceField,
             'brand': forms.fields.CharField,
         }
