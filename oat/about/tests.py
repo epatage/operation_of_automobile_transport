@@ -1,15 +1,25 @@
-from django.test import TestCase, Client
-from django.contrib.auth import get_user_model
 from http import HTTPStatus
 
-User = get_user_model()
+from django.test import TestCase, Client
+from users.models import Department, User
 
 
 class URLPagesTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.user = User.objects.create_user(username='user')
+        cls.department = Department.objects.create(
+            title='Департамент',
+            slug='department-test',
+        )
+        cls.user = User.objects.create(
+            username='',
+            last_name='Иванов',
+            first_name='Иван',
+            patronymic='Иванович',
+            department=cls.department,
+            position='Специалист',
+        )
 
     def setUp(self) -> None:
         self.guest_user = Client()
@@ -19,6 +29,7 @@ class URLPagesTest(TestCase):
 
     def test_url_exists_for_all_users(self):
         """URL адреса доступны для всех пользователей."""
+
         url = (
             '/about/',
         )
@@ -31,6 +42,7 @@ class URLPagesTest(TestCase):
 
     def test_about_url_uses_correct_template(self):
         """Проверка шаблона для адресов /about/."""
+
         urls_templates = (
             ('/about/', 'about/info.html'),
         )
