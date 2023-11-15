@@ -57,7 +57,7 @@ class CarFormTest(TestCase):
         self.guest_user = Client()
 
         self.authorized_user = Client()
-        self.authorized_user.force_login(CarAndColumnViewTest.user)
+        self.authorized_user.force_login(CarFormTest.user)
 
     def test_add_car_form_create_new_car(self):
         """Валидная форма создает запись в Car."""
