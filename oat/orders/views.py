@@ -185,9 +185,9 @@ def order_detail(request, order_id):
 
     context = {
         'order': order,
-        'id': order_id,
-        'text': text,
-        'user': user,
+        'id': order_id,  # Убрать !
+        'text': text,  # Убрать !
+        'user': user,  # Убрать ?
     }
 
     return render(request, 'orders/order_detail.html', context)

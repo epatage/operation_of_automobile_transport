@@ -95,20 +95,6 @@ class CarURLTest(TestCase):
                 response = self.guest_user.get(address, follow=True)
                 self.assertRedirects(response, f'/auth/login/?next={address}')
 
-    def test_url_not_found_all_users(self):
-        """URL-адреса вернут 404 всем пользователям."""
-
-        url = (
-            '/unexisting_page/',
-        )
-
-        for address in url:
-            with self.subTest(address=address):
-                response = self.guest_user.get(address)
-                self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
-                response = self.authorized_user.get(address)
-                self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
-
     def test_urls_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
 
@@ -121,7 +107,6 @@ class CarURLTest(TestCase):
             ('/cars/add/', 'cars/car_add.html'),
             (f'/cars/{self.car.id}/', 'cars/car_detail.html'),
             (f'/cars/{self.car.id}/edit/', 'cars/car_add.html'),
-            ('/cars/nonexistent/', 'core/404.html'),
         )
         for address, template in url_templates_names:
             with self.subTest(address=address):

@@ -10,7 +10,10 @@ class CarAndColumnViewTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.department = Department.objects.create(title='Департамент', slug='depart')
+        cls.department = Department.objects.create(
+            title='Департамент',
+            slug='depart',
+        )
         cls.user = User.objects.create(
             username='',
             last_name='Иванов',
@@ -58,9 +61,11 @@ class CarAndColumnViewTest(TestCase):
         self.authorized_user.force_login(CarAndColumnViewTest.user)
 
     def test_pages_uses_correct_template(self):
-        """URL-адрес при обращении по reverse-именам
-         использует соответствующий шаблон.
-         """
+        """
+        URL-адрес при обращении по reverse-именам
+        использует соответствующий шаблон.
+        """
+
         pages_names_templates = (
             (reverse('cars:cars_list'), 'cars/cars_list.html'),
             (reverse(

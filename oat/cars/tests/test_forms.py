@@ -5,11 +5,14 @@ from users.models import User, Department
 from ..models import Car, TypeCar, Column
 
 
-class CarAndColumnViewTest(TestCase):
+class CarFormTest(TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.department = Department.objects.create(title='Департамент', slug='depart')
+        cls.department = Department.objects.create(
+            title='Департамент',
+            slug='department-test',
+        )
         cls.user = User.objects.create(
             username='',
             last_name='Иванов',
@@ -21,12 +24,12 @@ class CarAndColumnViewTest(TestCase):
 
         cls.column_num_1 = Column.objects.create(
             title='Автоколонна_1_test',
-            location='Степное_test',
+            location='Локация_1_test',
             slug='AK_1_test',
         )
         cls.column_num_2 = Column.objects.create(
             title='Автоколонна_2_test',
-            location='Саратов_test',
+            location='Локация_2_test',
             slug='AK_2_test',
         )
         cls.type_car_truck = TypeCar.objects.create(
@@ -38,7 +41,7 @@ class CarAndColumnViewTest(TestCase):
             slug='autocrane_test',
         )
         cls.car_truck = Car.objects.create(
-            brand='Камаз_test',
+            brand='Камаз',
             reg_mark='В111ВО64',
             type_car=cls.type_car_truck,
             column=cls.column_num_1,
@@ -58,6 +61,7 @@ class CarAndColumnViewTest(TestCase):
 
     def test_add_car_form_create_new_car(self):
         """Валидная форма создает запись в Car."""
+
         car_count = Car.objects.count()
 
         form_data = {

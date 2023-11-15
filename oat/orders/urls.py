@@ -18,8 +18,9 @@ urlpatterns = [
     path('add/', views.order_add, name='order_add'),
     path('<int:order_id>/', views.order_detail, name='order_detail'),
     path('<int:order_id>/edit/', views.order_edit, name='order_edit'),
+    path('', views.home_page, name='home_page'),
 
     # Удаление заявки (реализовать закрытие отказом заказчика)
     path('delete/', views.order_delete, name='order_delete'),
-    path('', views.home_page, name='home_page'),
+
 ]
