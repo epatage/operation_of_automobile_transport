@@ -1,4 +1,19 @@
 
+.btn-main {
+    /* --bs-btn-font-weight: 600; */
+    --bs-btn-color: var(--font-main-color);  /* Цвет шрифта */
+    --bs-btn-bg: var(--button-main-color);  /* Цвет кнопки 7CB2CEFF */
+    --bs-btn-border-color: var(--font-main-second-color);  /* Цвет границы кнопки 84B9D3FF */
+    --bs-btn-border-radius: .5rem; /* Закругления краев */
+    --bs-btn-hover-color: var(--font-main-color); /* Цвет шрифта при наводке */
+    --bs-btn-hover-bg: var(--font-main-second-color, 10%); /* 6CA3BEFF */
+    --bs-btn-hover-border-color: #{shade-color(--font-main-second-color, 10%)};
+    --bs-btn-focus-shadow-rgb: var(--nav-link-active-color);
+    --bs-btn-active-color: var(--bs-btn-hover-color);
+    --bs-btn-active-bg: var(--nav-link-active-color); /* 7EB6D3FF */
+    --bs-btn-active-border-color: var(--nav-link-active-color); /*  #{shade-color($bd-violet, 80%)}; */
+}
+
 .table-order {
     border-collapse: collapse;
     margin: 25px 0;
