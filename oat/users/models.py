@@ -23,6 +23,10 @@ class Department(models.Model):
         default=True,
     )
 
+    class Meta:
+        verbose_name = 'Подразделение'
+        verbose_name_plural = 'Подразделения'
+
     def __str__(self):
         return self.title
 

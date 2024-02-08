@@ -53,6 +53,10 @@ class Car(models.Model):
     # Менеджер для активных (в эксплуатации) ТС
     activated = ActiveCarManager()
 
+    class Meta:
+        verbose_name = 'Автомобиль'
+        verbose_name_plural = 'Автомобили'
+
     def __str__(self):
         return f'{self.reg_mark}'
 
@@ -63,6 +67,10 @@ class Column(models.Model):
     title = models.CharField(max_length=50)
     location = models.CharField(max_length=200)
     slug = models.SlugField('slug', unique=True)
+
+    class Meta:
+        verbose_name = 'Автоколонна'
+        verbose_name_plural = 'Автоколонны'
 
     def __str__(self):
         return self.title
@@ -82,6 +90,10 @@ class TypeCar(models.Model):
     active = models.BooleanField(
         default=True,
     )
+
+    class Meta:
+        verbose_name = 'Тип а/м'
+        verbose_name_plural = 'Тип а/м'
 
     def __str__(self):
         return self.title

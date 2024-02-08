@@ -75,14 +75,13 @@ class Order(models.Model):
     pub_date = models.DateTimeField(
         'Дата и время создания заявки',
         auto_now_add=True,
+        auto_now=False,
         null=True,
-        blank=False,
     )
     edit_date = models.DateTimeField(
         'Дата и время последнего редактирования заявки',
         auto_now=True,
         null=True,
-        blank=False,
     )
     order_date = models.DateField(
         'Дата заявки',
@@ -101,6 +100,8 @@ class Order(models.Model):
 
     class Meta:
         ordering = ('-pub_date',)
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'
 
     def __str__(self):
         return f'Маршрут:{self.route_movement}, Тип ТС: {self.type_car}'
