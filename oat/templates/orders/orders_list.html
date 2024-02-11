@@ -11,54 +11,54 @@
 {#   <h3> Список Заявок: {{ cars_count }} ед. </h3>#}
 {#  переключатлеь по дням месяца. Возможно, не нужен.  {% include 'orders/includes/switcher_date.html' %}#}
 
-      <div>
-        <form action="{% url 'orders:orders_list' year month day %}" method="get" >
-          {{ date.management_form }}
-          <div class="form-group">
-            <div class="container-fluid text-center overflow-hidden">
-              <div class="row ">
-                <div class="col">
-                  <div class="text fw-bold" style="font-size: larger">
-                    Текущая дата : {{ year }} - {{ month }} - {{ day }}
-                  </div>
-                </div>
-              </div>
-
-              <div class="row justify-content-md-center">
-              {% if date.errors %}
-                  {% for field in date %}
-                    {% for error in field.errors %}
-                      <div class="alert alert-danger">
-                        {{ error|escape }}
-                      </div>
-                    {% endfor %}
-                  {% endfor %}
-                  {% for error in date.non_field_errors %}
-                    <div class="alert alert-danger">
-                      {{ error|escape }}
-                    </div>
-                  {% endfor %}
-              {% endif %}
-
-                {% for field in date %}
-                  <div class="col-md-auto">
-                    {{ field.label_tag }}{{ field }}
-                  </div>
-                {% endfor %}
-
-                <div class="col-lg-2">
-                  <button name="update" type="submit" class="btn btn-main">
-                    Обновить
-                  </button>
+    <!-- Блок даты для фильтрации заявок на определенный день -->
+    <div>
+      <form action="{% url 'orders:orders_list' year month day %}" method="get" >
+        {{ date.management_form }}
+        <div class="form-group">
+          <div class="container-fluid text-center overflow-hidden">
+            <div class="row ">
+              <div class="col">
+                <div class="text fw-bold" style="font-size: larger">
+                  Текущая дата : {{ year }} - {{ month }} - {{ day }}
                 </div>
               </div>
             </div>
+
+            <div class="row justify-content-md-center">
+            {% if date.errors %}
+              {% for field in date %}
+                {% for error in field.errors %}
+                  <div class="alert alert-danger">
+                    {{ error|escape }}
+                  </div>
+                {% endfor %}
+              {% endfor %}
+              {% for error in date.non_field_errors %}
+                <div class="alert alert-danger">
+                  {{ error|escape }}
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            {% for field in date %}
+              <div class="col-md-auto">
+                {{ field.label_tag }}{{ field }}
+              </div>
+            {% endfor %}
+
+              <div class="col-lg-2">
+                <button name="update" type="submit" class="btn btn-main">
+                  Обновить
+                </button>
+              </div>
+            </div>
           </div>
+        </div>
+      </form>
+    </div>
 
-        </form>
-      </div>
-
-
+<!-- Блок таблицы с заявками -->
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="container card-body">

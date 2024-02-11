@@ -25,6 +25,7 @@ class OrderAddForm(BaseOrderForm):
 
     class Meta(BaseOrderForm.Meta):
         exclude = ('department',)
+        fields = ('order_date',) + BaseOrderForm.Meta.fields
         widgets = {
             'order_date': forms.TextInput(attrs={
                 'class': 'form-control-sm',
@@ -74,10 +75,14 @@ class OrderEditForm(BaseOrderForm):
 class OrderCloseForm(BaseOrderForm):
     """Форма для закрытия заявок на главной странице."""
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['department'].disabled = True
+        self.fields['type_car'].disabled = True
+
     class Meta(BaseOrderForm.Meta):
         model = Order
         fields = ('car',) + BaseOrderForm.Meta.fields
-
         widgets = {
             'car': forms.Select(attrs={'style': 'width: 100%'}),
             'type_car': forms.Select(attrs={'style': 'width: 100%'}),
@@ -98,6 +103,8 @@ class OrderCloseForm(BaseOrderForm):
             ),
             'department': forms.Select(attrs={'style': 'width: 100%'}),
         }
+
+
 
 
 """FormSet для оформления (подачи) заявки."""

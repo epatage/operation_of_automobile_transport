@@ -10,14 +10,15 @@ class OrderAdmin(admin.ModelAdmin):
         'car',
         'type_car',
         'route_movement',
+        'department',
         'time_delivery_car_on_base',
         'time_delivery_car_on_borehole',
         'quantity_hours',
         'note',
         'customer',
-        'department',
         'pub_date',
     )
     search_fields = ('order_date', 'route_movement')
     list_filter = ('order_date',)
     list_editable = ('car',)
+    list_per_page = 20

@@ -74,9 +74,9 @@ def orders_list(request, year=None, month=None, day=None):
             request.POST or None, queryset=orders, prefix='order'
         )
         if formset.is_valid():
-            formset.save(commit=False)
-            for form in formset:
-                form.save()
+            formset.save()
+
+            return redirect('orders:orders_list', year, month, day)
 
     formset = OrderCloseFormSet(queryset=orders, prefix='order')
 
